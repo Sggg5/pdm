@@ -3,7 +3,7 @@
 // No separate product data maintenance needed
 
 const B2B_DATA_URL = "/api/b2b-products";
-const B2B_IMAGE_BASE = "https://sggg.cc.cd";
+const B2B_IMAGE_BASE = "https://raw.githubusercontent.com/Sggg5/b2b/main/public";
 const LOCAL_FALLBACK = "data/products.json";
 
 let allProducts = [];
@@ -58,6 +58,11 @@ async function loadProducts() {
 
 // --- Enrich B2B product with PDM-specific fields ---
 function enrichProduct(bp) {
+  // Build rich description from available fields
+  const descParts = [];
+  if (bp.description) descParts.push(bp.description);
+  if (bp.pressure) descParts.push("压力等级: " + bp.pressure);
+  if (bp.connection) descParts.push("连接方式: " + bp.connection);
   return {
     id: bp.id,
     code: bp.id,
@@ -65,12 +70,14 @@ function enrichProduct(bp) {
     category: mapCategory(bp.category, bp.name),
     spec: bp.size || "",
     material: bp.material || "",
+    pressure: bp.pressure || "",
+    connection: bp.connection || "",
     series: mapSeries(bp.category),
     version: "V1.0",
     status: "待发布",
     owner: "",
     updatedAt: new Date().toISOString().slice(0, 10),
-    description: bp.description || "",
+    description: descParts.join(" | "),
     image: bp.image ? B2B_IMAGE_BASE + bp.image : "",
     drawings: buildDrawings(bp),
     bom: [],
@@ -84,8 +91,8 @@ function enrichProduct(bp) {
 // --- Build initial drawings from B2B CAD/PDF links ---
 function buildDrawings(bp) {
   const dwgs = [];
-  if (bp.pdf) dwgs.push({ id: bp.id + "-PDF", name: bp.name + " (PDF)", file: bp.pdf, type: "pdf", size: "" });
-  if (bp.cad) dwgs.push({ id: bp.id + "-CAD", name: bp.name + " (DWG)", file: bp.cad, type: "dwg", size: "" });
+  if (bp.pdf) dwgs.push({ id: bp.id + "-PDF", name: bp.name + " 产品样本 (PDF)", file: bp.pdf.replace("/files/", "files/"), url: B2B_IMAGE_BASE + "/" + bp.pdf.replace(/^\//, ""), type: "pdf", size: "" });
+  if (bp.cad) dwgs.push({ id: bp.id + "-CAD", name: bp.name + " CAD图纸 (DWG)", file: bp.cad.replace("/files/", "files/"), url: B2B_IMAGE_BASE + "/" + bp.cad.replace(/^\//, ""), type: "dwg", size: "" });
   return dwgs;
 }
 
@@ -328,14 +335,16 @@ function showProduct(id) {
       </div>
     </div>
     <div class="prod-meta-grid">
+      <div class="prod-meta-item"><strong>产品编码</strong><span style="font-family:var(--font-mono)">${p.code || "-"}</span></div>
       <div class="prod-meta-item"><strong>规格</strong><span>${p.spec || "-"}</span></div>
       <div class="prod-meta-item"><strong>材质</strong><span>${p.material || "-"}</span></div>
       <div class="prod-meta-item"><strong>产品系列</strong><span>${p.series || "-"}</span></div>
+      <div class="prod-meta-item"><strong>压力等级</strong><span>${p.pressure || "-"}</span></div>
+      <div class="prod-meta-item"><strong>连接方式</strong><span>${p.connection || "-"}</span></div>
       <div class="prod-meta-item"><strong>当前版本</strong><span>${p.version || "V1.0"}</span></div>
       <div class="prod-meta-item"><strong>发布状态</strong><span class="soStatus"><span class="status-dot ${getStatusDot(p.status)}"></span>${p.status}</span></div>
       <div class="prod-meta-item"><strong>责任人</strong><span>${p.owner || "-"}</span></div>
       <div class="prod-meta-item"><strong>更新日期</strong><span>${p.updatedAt || "-"}</span></div>
-      <div class="prod-meta-item"><strong>产品编码</strong><span style="font-family:var(--font-mono)">${p.code || "-"}</span></div>
     </div>
     ${renderSections(p)}
   `;
@@ -353,8 +362,8 @@ function renderSections(p) {
           <div class="name">${d.name}</div>
           <div class="meta">${d.file} · ${d.size || ""}</div>
           <div class="draw-actions">
-            <button class="draw-btn primary" onclick="showToast('在线预览: ${d.file}', 'info')">在线预览</button>
-            <button class="draw-btn" onclick="showToast('下载文件: ${d.file}', 'info')">下载文件</button>
+            <button class="draw-btn primary" onclick="window.open('${d.url || ""}', '_blank')">在线预览</button>
+            <button class="draw-btn" onclick="window.open('${d.url || ""}', '_blank')">下载文件</button>
           </div>
         </div>
       `).join("")}</div>`;
