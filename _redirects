@@ -1,1 +1,3 @@
 /* /index.html 200
+# Proxy B2B product data (live from GitHub)
+/api/b2b-products https://raw.githubusercontent.com/Sggg5/b2b/main/data/products.json 302

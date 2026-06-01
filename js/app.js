@@ -1,5 +1,10 @@
-// FRANTA PDM v2 - Product Data Management
-// Auto-generated from B2B product data
+// FRANTA PDM v3 - Runtime B2B data source
+// Products loaded directly from B2B project at runtime
+// No separate product data maintenance needed
+
+const B2B_DATA_URL = "/api/b2b-products";
+const B2B_IMAGE_BASE = "https://sggg.cc.cd";
+const LOCAL_FALLBACK = "data/products.json";
 
 let allProducts = [];
 let allChanges = [];
@@ -10,15 +15,13 @@ let currentProductId = null;
 // --- Init ---
 async function init() {
   try {
-    const [pRes, cRes] = await Promise.all([
-      fetch("data/products.json"),
+    const [pData, cRes] = await Promise.all([
+      loadProducts(),
       fetch("data/changes.json")
     ]);
-    if (!pRes.ok || !cRes.ok) {
-      throw new Error("Failed to load data");
-    }
-    allProducts = await pRes.json();
+    if (!cRes.ok) throw new Error("Failed to load changes");
     allChanges = await cRes.json();
+    allProducts = pData.map(enrichProduct);
     filteredProducts = [...allProducts];
     renderSidebar();
     renderHome();
@@ -32,6 +35,85 @@ async function init() {
   }
 }
 
+// --- Load B2B products with fallback ---
+async function loadProducts() {
+  try {
+    const res = await fetch(B2B_DATA_URL);
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) {
+        console.log("PDM: loaded", data.length, "products from B2B");
+        return data;
+      }
+    }
+  } catch (e) {
+    console.log("PDM: B2B unavailable, using fallback");
+  }
+  const res = await fetch(LOCAL_FALLBACK);
+  if (!res.ok) throw new Error("All data sources failed");
+  const data = await res.json();
+  console.log("PDM: loaded", data.length, "products from local fallback");
+  return data;
+}
+
+// --- Enrich B2B product with PDM-specific fields ---
+function enrichProduct(bp) {
+  return {
+    id: bp.id,
+    code: bp.id,
+    name: bp.name,
+    category: mapCategory(bp.category, bp.name),
+    spec: bp.size || "",
+    material: bp.material || "",
+    series: mapSeries(bp.category),
+    version: "V1.0",
+    status: "待发布",
+    owner: "",
+    updatedAt: new Date().toISOString().slice(0, 10),
+    description: bp.description || "",
+    image: bp.image ? B2B_IMAGE_BASE + bp.image : "",
+    drawings: buildDrawings(bp),
+    bom: [],
+    routings: [],
+    sops: [],
+    inspection: [],
+    changes: []
+  };
+}
+
+// --- Build initial drawings from B2B CAD/PDF links ---
+function buildDrawings(bp) {
+  const dwgs = [];
+  if (bp.pdf) dwgs.push({ id: bp.id + "-PDF", name: bp.name + " (PDF)", file: bp.pdf, type: "pdf", size: "" });
+  if (bp.cad) dwgs.push({ id: bp.id + "-CAD", name: bp.name + " (DWG)", file: bp.cad, type: "dwg", size: "" });
+  return dwgs;
+}
+
+// --- Category mapping: B2B -> PDM ---
+function mapCategory(b2bCat, name) {
+  const top = mapSeries(b2bCat);
+  if (top === "沟槽系统") {
+    if (name.includes("卡箍")) return ["沟槽系统", "卡箍"];
+    if (name.includes("三通")) return ["沟槽系统", "三通"];
+    if (name.includes("弯头")) return ["沟槽系统", "弯头"];
+    if (name.includes("法兰")) return ["沟槽系统", "法兰"];
+    return ["沟槽系统", "管件"];
+  }
+  return [top];
+}
+
+function mapSeries(b2bCat) {
+  const m = {
+    "沟槽管件": "沟槽系统",
+    "双卡管件": "双卡压系统",
+    "单卡管件": "环压系统",
+    "保温管": "保温管系统",
+    "覆塑管": "覆塑管系统",
+    "不锈钢管": "不锈钢管系统",
+    "不锈钢管件": "不锈钢管系统"
+  };
+  return m[b2bCat] || b2bCat;
+}
 // --- Sidebar ---
 function renderSidebar() {
   const sb = document.getElementById("sidebar");
@@ -77,8 +159,7 @@ function getCategoryTree() {
     const top = p.category[0];
     const sub = p.category.length > 1 ? p.category[1] : null;
     if (!map[top]) map[top] = { name: top, children: [] };
-    const existing = map[top].children.find(x => x === sub);
-    if (sub && !existing) map[top].children.push(sub);
+    if (sub && !map[top].children.find(x => x === sub)) map[top].children.push(sub);
   });
   return Object.values(map).sort((a, b) => a.name.localeCompare(b.name, "zh"));
 }
@@ -112,7 +193,7 @@ function renderHome() {
   el.innerHTML = `
     <div class="hero">
       <h2>产品数据管理平台</h2>
-      <p>管理产品资料、图纸、BOM、工艺路线、SOP、检验规范与变更记录</p>
+      <p>产品数据同步自 B2B · ${allProducts.length} 个产品 · 实时更新</p>
       <div class="hero-actions">
         <button class="hero-btn hero-btn-primary" onclick="document.getElementById('searchInput').focus()">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
@@ -149,15 +230,13 @@ function renderHome() {
     <div class="section-head"><h3>产品列表</h3><p>${filteredProducts.length} 个产品</p></div>
     <div class="panel">
       <table class="data-table">
-        <thead><tr>
-          <th>图片</th><th>产品名称</th><th>编码</th><th>规格</th><th>材质</th><th>状态</th><th>版本</th>
-        </tr></thead>
+        <thead><tr><th>图片</th><th>产品名称</th><th>编码</th><th>规格</th><th>材质</th><th>状态</th><th>版本</th></tr></thead>
         <tbody>${renderProductRows(filteredProducts)}</tbody>
       </table>
     </div>
     <div class="section-head"><h3>最近变更记录</h3></div>
     <div class="panel"><div class="timeline">${renderChangeTimeline()}</div></div>
-    <div class="footer">FRANTA PDM v2.1 \u00b7 产品数据管理平台 \u00b7 数据自动同步自 B2B</div>
+    <div class="footer">FRANTA PDM v3 · 产品数据实时同步自 B2B · ${allProducts.length} 个产品</div>
   `;
 }
 
@@ -167,23 +246,18 @@ function calcStats(products) {
     if (p.drawings) drawings += p.drawings.length;
     if (p.sops) sops += p.sops.length;
   });
-  return {
-    products: products.length,
-    drawings,
-    sops,
-    changes: allChanges.length
-  };
+  return { products: products.length, drawings, sops, changes: allChanges.length };
 }
 
 function renderModules() {
   const mods = [
-    { icon: "\ud83d\udce6", name: "产品库", count: allProducts.length },
-    { icon: "\ud83d\udcd0", name: "图纸库", count: allProducts.reduce((a,p) => a + (p.drawings?p.drawings.length:0), 0) },"
-    { icon: "\ud83d\udccb", name: "BOM", count: allProducts.reduce((a,p) => a + (p.bom?p.bom.length:0), 0) },"
-    { icon: "\u2699\ufe0f", name: "工艺路线", count: allProducts.reduce((a,p) => a + (p.routings?p.routings.length:0), 0) },"
-    { icon: "\ud83d\udcc4", name: "SOP", count: allProducts.reduce((a,p) => a + (p.sops?p.sops.length:0), 0) },"
-    { icon: "\ud83d\udd0d", name: "检验规范", count: allProducts.reduce((a,p) => a + (p.inspection?p.inspection.length:0), 0) },"
-    { icon: "\ud83d\udd04", name: "变更记录", count: allChanges.length }
+    { icon: "\u{1F4E6}", name: "产品库", count: allProducts.length },
+    { icon: "\u{1F4D0}", name: "图纸库", count: allProducts.reduce((a,p) => a + (p.drawings?p.drawings.length:0), 0) },
+    { icon: "\u{1F4CB}", name: "BOM", count: allProducts.reduce((a,p) => a + (p.bom?p.bom.length:0), 0) },
+    { icon: "\u2699\uFE0F", name: "工艺路线", count: allProducts.reduce((a,p) => a + (p.routings?p.routings.length:0), 0) },
+    { icon: "\u{1F4C4}", name: "SOP", count: allProducts.reduce((a,p) => a + (p.sops?p.sops.length:0), 0) },
+    { icon: "\u{1F50D}", name: "检验规范", count: allProducts.reduce((a,p) => a + (p.inspection?p.inspection.length:0), 0) },
+    { icon: "\u{1F504}", name: "变更记录", count: allChanges.length }
   ];
   return mods.map(m => `
     <div class="module-card" onclick="scrollToSection('${m.name}')">
@@ -211,8 +285,7 @@ function renderProductRows(products) {
 
 function getStatusDot(status) {
   if (status === "已发布") return "dot-green";
-  if (status === "审核中") return "dot-orange";
-  if (status === "试制") return "dot-orange";
+  if (status === "审核中" || status === "试制") return "dot-orange";
   if (status === "待发布") return "dot-blue";
   return "dot-gray";
 }
@@ -225,13 +298,11 @@ function renderChangeTimeline() {
     return `
       <div class="change-item" onclick="showECN('${c.id}')">
         <div class="change-title">${c.title} <span class="badge ${badgeClass}">${c.status}</span></div>
-        <div class="change-meta">${c.id} \u00b7 ${c.productName} \u00b7 ${c.requester} \u00b7 ${c.date}</div>
+        <div class="change-meta">${c.id} · ${c.productName} · ${c.requester} · ${c.date}</div>
         <div class="change-desc">${c.description}</div>
-      </div>
-    `;
+      </div>`;
   }).join("");
 }
-
 // --- Product Detail ---
 function showProduct(id) {
   const p = allProducts.find(x => x.id === id);
@@ -280,7 +351,7 @@ function renderSections(p) {
         <div class="draw-card">
           <span class="draw-icon">${getDrawIcon(d.type)}</span>
           <div class="name">${d.name}</div>
-          <div class="meta">${d.file} \u00b7 ${d.size || ""}</div>
+          <div class="meta">${d.file} · ${d.size || ""}</div>
           <div class="draw-actions">
             <button class="draw-btn primary" onclick="showToast('在线预览: ${d.file}', 'info')">在线预览</button>
             <button class="draw-btn" onclick="showToast('下载文件: ${d.file}', 'info')">下载文件</button>
@@ -297,7 +368,7 @@ function renderSections(p) {
         <thead><tr><th>层级</th><th>图号</th><th>名称</th><th>数量</th><th>单位</th><th>类型</th><th>来源</th></tr></thead>
         <tbody>${p.bom.map(b => `
           <tr><td>${"  ".repeat(b.level)}Lv.${b.level}</td><td style="font-family:var(--font-mono);font-size:12px">${b.part}</td><td>${b.name}</td><td>${b.qty}</td><td>${b.unit}</td><td>${b.type}</td><td>${b.source}</td></tr>
-        `).join("")}</tbody></table></div>\`;
+        `).join("")}</tbody></table></div>`;
   } else {
     html += `<div class="empty-section"><p>暂未建立 BOM 清单</p></div>`;
   }
@@ -308,7 +379,7 @@ function renderSections(p) {
         <thead><tr><th>工序</th><th>名称</th><th>部门</th><th>设备</th><th>工时</th><th>关键要求</th></tr></thead>
         <tbody>${p.routings.map(r => `
           <tr><td>${r.seq}</td><td>${r.name}</td><td>${r.dept}</td><td>${r.machine}</td><td>${r.time}</td><td>${r.keyReq || ""}</td></tr>
-        `).join("")}</tbody></table></div>\`;
+        `).join("")}</tbody></table></div>`;
   } else {
     html += `<div class="empty-section"><p>暂未录入工艺路线</p></div>`;
   }
@@ -319,7 +390,7 @@ function renderSections(p) {
         <thead><tr><th>编号</th><th>名称</th><th>分类</th></tr></thead>
         <tbody>${p.sops.map(s => `
           <tr><td style="font-family:var(--font-mono);font-size:12px">${s.code}</td><td>${s.name}</td><td>${s.category}</td></tr>
-        `).join("")}</tbody></table></div>\`;
+        `).join("")}</tbody></table></div>`;
   } else {
     html += `<div class="empty-section"><p>暂未上传 SOP 文件</p></div>`;
   }
@@ -331,7 +402,7 @@ function renderSections(p) {
         <tbody>${p.inspection.map(i => {
           const dot = i.result === "pass" ? "dot-green" : i.result === "fail" ? "dot-orange" : "dot-gray";
           return `<tr><td>${i.name}</td><td>${i.spec}</td><td>${i.method}</td><td><span class="soStatus"><span class="status-dot ${dot}"></span>${i.result}</span></td><td>${i.measured}</td></tr>`;
-        }).join("")}</tbody></table></div>\`;
+        }).join("")}</tbody></table></div>`;
   } else {
     html += `<div class="empty-section"><p>暂未建立检验规范</p></div>`;
   }
@@ -344,10 +415,10 @@ function renderSections(p) {
         const badgeClass = c.status === "已批准" ? "badge-green" : c.status === "草稿" ? "badge-gray" : "badge-orange";
         return `<div class="change-item" onclick="showECN('${c.id}')">
           <div class="change-title">${c.title} <span class="badge ${badgeClass}">${c.status}</span></div>
-          <div class="change-meta">${c.id} \u00b7 ${c.type} \u00b7 ${c.requester} \u00b7 ${c.date}</div>
+          <div class="change-meta">${c.id} · ${c.type} · ${c.requester} · ${c.date}</div>
           <div class="change-desc">${c.description}</div>
         </div>`;
-      }).join("")}</div></div>\`;
+      }).join("")}</div></div>`;
     } else {
       html += `<div class="empty-section"><p>暂无关联变更记录</p></div>`;
     }
@@ -358,10 +429,9 @@ function renderSections(p) {
 }
 
 function getDrawIcon(type) {
-  const icons = { dwg: "\ud83d\udcd0", pdf: "\ud83d\udcc4", stp: "\ud83d\udd17", dxf: "\ud83d\udcd0", svg: "\ud83d\udd8c" };
-  return icons[type] || "\ud83d\udcc4";
+  const icons = { dwg: "\u{1F4D0}", pdf: "\u{1F4C4}", stp: "\u{1F517}", dxf: "\u{1F4D0}", svg: "\u{1F58C}" };
+  return icons[type] || "\u{1F4C4}";
 }
-
 // --- ECN Modal ---
 function showECN(id) {
   const c = allChanges.find(x => x.id === id);
@@ -375,7 +445,7 @@ function showECN(id) {
   body.innerHTML = `
     <div class="ecn-header">
       <h2>${c.title} <span class="badge ${badgeClass}">${c.status}</span></h2>
-      <div class="sub">${c.id} \u00b7 ${c.productName} \u00b7 ${c.type}</div>
+      <div class="sub">${c.id} · ${c.productName} · ${c.type}</div>
     </div>
     <div class="ecn-meta-grid">
       <div class="ecn-meta-item"><strong>产品</strong><span>${c.productName}</span></div>
@@ -470,11 +540,11 @@ function renderChanges() {
       const badgeClass = c.status === "已批准" ? "badge-green" : c.status === "草稿" ? "badge-gray" : "badge-orange";
       return `<div class="change-item" onclick="showECN('${c.id}')">
         <div class="change-title">${c.title} <span class="badge ${badgeClass}">${c.status}</span></div>
-        <div class="change-meta">${c.id} \u00b7 ${c.productName} \u00b7 ${c.type} \u00b7 ${c.requester} \u00b7 ${c.date}</div>
+        <div class="change-meta">${c.id} · ${c.productName} · ${c.type} · ${c.requester} · ${c.date}</div>
         <div class="change-desc">${c.description}</div>
       </div>`;
     }).join("")}</div></div>
-    <div class="footer">FRANTA PDM v2.1 \u00b7 产品数据管理平台</div>
+    <div class="footer">FRANTA PDM v3 · 产品数据管理平台</div>
   `;
 }
 
@@ -490,7 +560,7 @@ function showToast(msg, type) {
   setTimeout(() => { t.style.opacity = "0"; setTimeout(() => t.remove(), 300); }, 2500);
 }
 
-// --- Modal ---
+// --- Modal close ---
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("ecnClose").addEventListener("click", () => {
     document.getElementById("ecnOverlay").style.display = "none";
@@ -503,7 +573,7 @@ document.addEventListener("DOMContentLoaded", () => {
   init();
 });
 
-// --- Scroll helper for module cards ---
+// --- Scroll helper ---
 function scrollToSection(name) {
   const el = document.getElementById(name);
   if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
