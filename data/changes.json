@@ -1,62 +1,161 @@
 [
   {
-    "id": "CHANGE-2026-001",
-    "title": "40 90度弯头壁厚调整",
+    "id": "ECN-2026-001",
+    "title": "弯头壁厚调整",
     "productId": "PRD-003",
-    "productName": "40 90度 弯头",
+    "productName": "沟槽式90°弯头",
     "type": "设计变更",
     "status": "已批准",
     "priority": "高",
     "requester": "褚永星",
+    "department": "技术部",
     "date": "2026-06-01",
-    "description": "壁厚 1.2mm → 1.5mm；原因：提高结构稳定性，降低现场变形风险。"
+    "effectiveDate": "2026-06-15",
+    "description": "DN40 90°弯头壁厚由 1.2mm 调整为 1.5mm，以提高结构强度和现场安装可靠性。",
+    "reason": "客户反馈现场安装时弯头出现变形，经应力分析确认原壁厚 1.2mm 在 DN40 规格下安全裕度不足。",
+    "before": "壁厚 1.2mm，材质 SUS304",
+    "after": "壁厚 1.5mm，材质 SUS304",
+    "affectedDepartments": [
+      "生产",
+      "品质",
+      "采购",
+      "技术"
+    ],
+    "relatedDocs": [
+      "EL40-90-Dimension.dwg V1.1→V1.2",
+      "SOP-WELD-001",
+      "QC-EL-040"
+    ]
   },
   {
-    "id": "CHANGE-2026-002",
-    "title": "沟槽三通增加气密测试",
+    "id": "ECN-2026-002",
+    "title": "三通增加气密测试要求",
     "productId": "PRD-002",
-    "productName": "DN100xDN50 沟槽机械三通",
+    "productName": "沟槽式等径三通",
     "type": "检验变更",
     "status": "审核中",
     "priority": "中",
     "requester": "技术质量部",
+    "department": "品质部",
     "date": "2026-05-18",
-    "description": "检验规范增加 0.6MPa 气密测试要求，关联客户：海宁水务。"
+    "effectiveDate": "2026-06-20",
+    "description": "DN100 三通检验规范增加 0.6MPa 气密测试要求，响应客户海宁水务的质量审核要求。",
+    "reason": "客户海宁水务供应商质量审核要求所有三通类产品出厂前必须通过气密测试。",
+    "before": "无气密测试要求；仅外观检验和尺寸抽检",
+    "after": "增加 0.6MPa 气密测试保压 3min；全检改为 100%",
+    "affectedDepartments": [
+      "生产",
+      "品质",
+      "销售"
+    ],
+    "relatedDocs": [
+      "QC-GT-100 V1.0→V2.0",
+      "SOP-TEST-002"
+    ]
   },
   {
-    "id": "CHANGE-2026-003",
-    "title": "卡箍密封圈宽度验证",
+    "id": "ECN-2026-003",
+    "title": "卡箍密封圈供应商变更验证",
     "productId": "PRD-001",
-    "productName": "DN65 沟槽卡箍接头",
+    "productName": "沟槽式卡箍接头",
     "type": "供应商变更",
     "status": "已批准",
     "priority": "中",
     "requester": "研发/品质",
+    "department": "采购部",
     "date": "2026-04-22",
-    "description": "增加新供应商密封圈验证记录，补充现场安装注意事项。"
+    "effectiveDate": "2026-05-10",
+    "description": "新增密封圈供应商宁波密封科技，需完成 EPDM 密封圈的材料验证、尺寸检测和批量密封测试。",
+    "reason": "原供应商产能不足，需要开发第二供应商以确保供应稳定。",
+    "before": "密封圈：宁波密封科技 EPDM 70° Shore A",
+    "after": "密封圈：新增宁波密封科技 + 宁波密封科技双供方",
+    "affectedDepartments": [
+      "采购",
+      "品质",
+      "生产",
+      "技术"
+    ],
+    "relatedDocs": [
+      "CP65-Seal.pdf",
+      "SOP-SEAL-002",
+      "供应商验证报告-2026-004"
+    ]
   },
   {
-    "id": "CHANGE-2026-004",
-    "title": "沟槽卡箍螺栓扭矩规范更新",
+    "id": "ECN-2026-004",
+    "title": "卡箍螺栓扭矩规范更新",
     "productId": "PRD-001",
-    "productName": "DN65 沟槽卡箍接头",
+    "productName": "沟槽式卡箍接头",
     "type": "工艺变更",
     "status": "审核中",
     "priority": "低",
     "requester": "品质部",
+    "department": "品质部",
     "date": "2026-05-10",
-    "description": "拧紧力矩由 50-70Nm 调整为 60-80Nm，配套更新装配作业指导书。"
+    "effectiveDate": "2026-06-01",
+    "description": "根据长期测试数据优化 M16 螺栓拧紧力矩范围，由 50-70Nm 调整为 60-80Nm。",
+    "reason": "长期运行测试数据显示 50Nm 在部分批次中出现松动，60Nm 以上可确保长期密封可靠性。",
+    "before": "拧紧力矩 50-70Nm",
+    "after": "拧紧力矩 60-80Nm",
+    "affectedDepartments": [
+      "生产",
+      "品质"
+    ],
+    "relatedDocs": [
+      "SOP-SEAL-002 V1.1→V1.2",
+      "装配作业指导书"
+    ]
   },
   {
-    "id": "CHANGE-2026-005",
+    "id": "ECN-2026-005",
     "title": "三通密封槽深度调整",
     "productId": "PRD-002",
-    "productName": "DN100xDN50 沟槽机械三通",
+    "productName": "沟槽式等径三通",
     "type": "设计变更",
     "status": "草稿",
     "priority": "高",
     "requester": "研发部",
+    "department": "技术部",
     "date": "2026-05-28",
-    "description": "DN50 支管密封槽深度由 4.5mm 调整为 5.0mm，提高密封可靠性。"
+    "effectiveDate": "",
+    "description": "DN100 三通密封槽深度由 4.5mm 调整为 5.0mm，以提高密封可靠性。",
+    "reason": "试制样品气密测试泄漏率 3%，分析原因为密封槽深度不够导致压缩量不足。",
+    "before": "密封槽深度 4.5mm",
+    "after": "密封槽深度 5.0mm",
+    "affectedDepartments": [
+      "生产",
+      "品质",
+      "技术"
+    ],
+    "relatedDocs": [
+      "GT100-Tee.dwg V2.0→V2.1",
+      "QC-GT-100"
+    ]
+  },
+  {
+    "id": "ECN-2026-006",
+    "title": "法兰新增检验规范",
+    "productId": "PRD-004",
+    "productName": "沟槽式法兰",
+    "type": "新增文件",
+    "status": "审核中",
+    "priority": "中",
+    "requester": "技术质量部",
+    "department": "品质部",
+    "date": "2026-04-20",
+    "effectiveDate": "2026-05-01",
+    "description": "为 DN80 沟槽式法兰新增 QC-FL-080 检验规范，涵盖尺寸、硬度、密封性检测标准。",
+    "reason": "新开发的 PRD-004 法兰产品需要建立完整的质量检验体系。",
+    "before": "无专用检验规范",
+    "after": "新增 QC-FL-080 检验规范，含 7 项检测参数",
+    "affectedDepartments": [
+      "品质",
+      "生产",
+      "技术"
+    ],
+    "relatedDocs": [
+      "QC-FL-080 V1.0",
+      "FL80-Dimension.pdf"
+    ]
   }
 ]

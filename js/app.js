@@ -1,252 +1,485 @@
-/* ============================================================
-   FRANTA PDM — Application Controller
-   ============================================================ */
-var PDM = {
-  data: { products: [], changes: [], allData: [] },
+// FRANTA PDM v2 - Product Data Management
+// Static MVP - no backend, no database, no login
 
-  init: function() {
-    Promise.all([
-      fetch("data/products.json").then(function(r){return r.json()}),
-      fetch("data/changes.json").then(function(r){return r.json()})
-    ]).then(function(results){
-      PDM.data.products = results[0];
-      PDM.data.changes = results[1];
-      // Build search index
-      PDM.data.allData = [];
-      PDM.data.products.forEach(function(p){
-        PDM.data.allData.push({type:"product", id:p.id, title:p.name, subtitle:p.id+" | "+p.spec, desc:(p.pdm_description||p.description||""), image:p.image});
+let allProducts = [];
+let allChanges = [];
+let filteredProducts = [];
+let currentView = "home";
+let currentProductId = null;
+
+// --- Init ---
+async function init() {
+  try {
+    const [pRes, cRes] = await Promise.all([
+      fetch("data/products.json"),
+      fetch("data/changes.json")
+    ]);
+    if (!pRes.ok || !cRes.ok) {
+      throw new Error("Failed to load data");
+    }
+    allProducts = await pRes.json();
+    allChanges = await cRes.json();
+    filteredProducts = [...allProducts];
+    renderSidebar();
+    renderHome();
+    bindSearch();
+  } catch (err) {
+    document.getElementById("content").innerHTML =
+      `<div style="padding:60px 20px;text-align:center;color:var(--muted)">
+        <p style="font-size:18px;font-weight:600;color:var(--ink)">数据加载失败</p>
+        <p>${err.message}</p>
+      </div>`;
+  }
+}
+
+// --- Sidebar ---
+function renderSidebar() {
+  const sb = document.getElementById("sidebar");
+  const tree = getCategoryTree();
+  let html = `<div class="sidebar-title">产品分类</div>`;
+  html += `<div class="sidebar-item active" data-filter="__all__">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+    全部产品
+    <span class="count">${allProducts.length}</span>
+  </div>`;
+  tree.forEach(t => {
+    const count = countByCategory(t.name, null);
+    html += `<div class="sidebar-item" data-filter="${t.name}">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V4h16v16z"/></svg>
+      ${t.name}
+      <span class="count">${count}</span>
+    </div>`;
+    if (t.children && t.children.length > 0) {
+      t.children.forEach(c => {
+        const cc = countByCategory(t.name, c);
+        html += `<div class="sidebar-item sidebar-sub" data-filter="${t.name}|${c}">
+          ${c}
+          <span class="count">${cc}</span>
+        </div>`;
       });
-      PDM.data.changes.forEach(function(c){
-        PDM.data.allData.push({type:"change", id:c.id, title:c.title, subtitle:c.productName+" | "+c.date, desc:c.desc});
-      });
-      PDM.render();
-      PDM.bindSearch();
-    }).catch(function(err){
-      document.getElementById("view-container").innerHTML =
-        '<div class="error-state"><h3>\u52a0\u8f7d\u6570\u636e\u5931\u8d25</h3><p>\u8bf7\u786e\u4fdd\u901a\u8fc7 HTTP \u670d\u52a1\u5668\u8bbf\u95ee\u6b64\u9875\u9762\u3002</p><button class="btn" onclick="location.reload()">\u91cd\u8bd5</button></div>';
+    }
+  });
+  sb.innerHTML = html;
+  sb.querySelectorAll(".sidebar-item").forEach(el => {
+    el.addEventListener("click", () => {
+      sb.querySelectorAll(".sidebar-item").forEach(x => x.classList.remove("active"));
+      el.classList.add("active");
+      const filter = el.dataset.filter;
+      applyCategoryFilter(filter);
     });
-  },
+  });
+}
 
-  bindSearch: function() {
-    var input = document.getElementById("searchInput");
-    if (!input) return;
-    input.addEventListener("keydown", function(e){
-      if (e.key === "Enter") {
-        var q = input.value.trim();
-        if (!q) { PDM.render(); return; }
-        PDM.doSearch(q);
-      }
-    });
-    // Ctrl+K / Cmd+K focus search
-    document.addEventListener("keydown", function(e){
-      if ((e.ctrlKey || e.metaKey) && e.key === "k") {
-        e.preventDefault();
-        input.focus();
-      }
-    });
-  },
+function getCategoryTree() {
+  const map = {};
+  allProducts.forEach(p => {
+    if (!p.category || p.category.length < 1) return;
+    const top = p.category[0];
+    const sub = p.category.length > 1 ? p.category[1] : null;
+    if (!map[top]) map[top] = { name: top, children: [] };
+    const existing = map[top].children.find(x => x === sub);
+    if (sub && !existing) map[top].children.push(sub);
+  });
+  return Object.values(map).sort((a, b) => a.name.localeCompare(b.name, "zh"));
+}
 
-  doSearch: function(q) {
-    q = q.toLowerCase();
-    var results = PDM.data.allData.filter(function(item){
-      return (item.title && item.title.toLowerCase().indexOf(q) >= 0) ||
-             (item.subtitle && item.subtitle.toLowerCase().indexOf(q) >= 0) ||
-             (item.desc && item.desc.toLowerCase().indexOf(q) >= 0);
-    });
+function countByCategory(top, sub) {
+  if (!top) return allProducts.length;
+  if (!sub) return allProducts.filter(p => p.category && p.category[0] === top).length;
+  return allProducts.filter(p => p.category && p.category[0] === top && p.category[1] === sub).length;
+}
 
-    if (results.length === 0) {
-      PDM.render();
-      PDM.toast("\u641c\u7d22\u201c" + q + "\u201d\u672a\u627e\u5230\u7ed3\u679c");
+function applyCategoryFilter(filter) {
+  if (!filter || filter === "__all__") {
+    filteredProducts = [...allProducts];
+  } else {
+    const parts = filter.split("|");
+    filteredProducts = allProducts.filter(p => {
+      if (!p.category) return false;
+      if (parts.length === 1) return p.category[0] === parts[0];
+      return p.category[0] === parts[0] && p.category[1] === parts[1];
+    });
+  }
+  renderHome();
+}
+
+// --- Home ---
+function renderHome() {
+  currentView = "home";
+  currentProductId = null;
+  const el = document.getElementById("content");
+  const stats = calcStats(filteredProducts);
+  el.innerHTML = `
+    <div class="hero">
+      <h2>产品数据管理平台</h2>
+      <p>管理产品资料、图纸、BOM、工艺路线、SOP、检验规范与变更记录</p>
+      <div class="hero-actions">
+        <button class="hero-btn hero-btn-primary" onclick="document.getElementById('searchInput').focus()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          搜索产品
+        </button>
+        <button class="hero-btn hero-btn-secondary" onclick="renderChanges()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="9"/></svg>
+          查看变更
+        </button>
+      </div>
+    </div>
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div>
+        <div><div class="stat-num">${stats.products}</div><div class="stat-label">产品数量</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+        <div><div class="stat-num">${stats.drawings}</div><div class="stat-label">图纸数量</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+        <div><div class="stat-num">${stats.sops}</div><div class="stat-label">SOP 数量</div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="9"/></svg></div>
+        <div><div class="stat-num">${stats.changes}</div><div class="stat-label">变更数量</div></div>
+      </div>
+    </div>
+    <div class="section-head"><h3>模块入口</h3></div>
+    <div class="module-grid">
+      ${renderModules()}
+    </div>
+    <div class="section-head"><h3>产品列表</h3><p>${filteredProducts.length} 个产品</p></div>
+    <div class="panel">
+      <table class="data-table">
+        <thead><tr>
+          <th>图片</th><th>产品名称</th><th>编码</th><th>规格</th><th>材质</th><th>状态</th><th>版本</th>
+        </tr></thead>
+        <tbody>${renderProductRows(filteredProducts)}</tbody>
+      </table>
+    </div>
+    <div class="section-head"><h3>最近变更记录</h3></div>
+    <div class="panel"><div class="timeline">${renderChangeTimeline()}</div></div>
+    <div class="footer">FRANTA PDM v2.0 · 产品数据管理平台 · 数据本地存储 · 无后端依赖</div>
+  `;
+}
+
+function calcStats(products) {
+  let drawings = 0, sops = 0;
+  products.forEach(p => {
+    if (p.drawings) drawings += p.drawings.length;
+    if (p.sops) sops += p.sops.length;
+  });
+  return {
+    products: products.length,
+    drawings,
+    sops,
+    changes: allChanges.length
+  };
+}
+
+function renderModules() {
+  const mods = [
+    { icon: "📦", name: "产品库", count: allProducts.length },
+    { icon: "📐", name: "图纸库", count: allProducts.reduce((a,p) => a + (p.drawings?p.drawings.length:0), 0) },
+    { icon: "📋", name: "BOM", count: allProducts.reduce((a,p) => a + (p.bom?p.bom.length:0), 0) },
+    { icon: "⚙", name: "工艺路线", count: allProducts.reduce((a,p) => a + (p.routings?p.routings.length:0), 0) },
+    { icon: "📄", name: "SOP", count: allProducts.reduce((a,p) => a + (p.sops?p.sops.length:0), 0) },
+    { icon: "🔍", name: "检验规范", count: allProducts.reduce((a,p) => a + (p.inspection?p.inspection.length:0), 0) },
+    { icon: "🔄", name: "变更记录", count: allChanges.length }
+  ];
+  return mods.map(m => `
+    <div class="module-card" onclick="scrollToSection('${m.name}')">
+      <div class="module-icon" style="font-size:22px;margin-bottom:6px">${m.icon}</div>
+      <div class="module-name">${m.name}</div>
+      <div class="module-count">${m.count} 项</div>
+    </div>
+  `).join("");
+}
+
+function renderProductRows(products) {
+  if (!products.length) return `<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--muted)">没有匹配的产品</td></tr>`;
+  return products.map(p => `
+    <tr onclick="showProduct('${p.id}')" style="cursor:pointer">
+      <td><img class="prod-img" src="${p.image || "https://placehold.co/42x42/e0f2f1/00796B?text=P"}" alt="${p.name}" onerror="this.src='https://placehold.co/42x42/e0f2f1/00796B?text=P'"></td>
+      <td><strong>${p.name}</strong></td>
+      <td style="font-family:var(--font-mono);font-size:12px">${p.code || "-"}</td>
+      <td>${p.spec || "-"}</td>
+      <td>${p.material || "-"}</td>
+      <td><span class="soStatus"><span class="status-dot ${p.status==="已发布"?"dot-green":"dot-orange"}"></span>${p.status}</span></td>
+      <td>${p.version || "V1.0"}</td>
+    </tr>
+  `).join("");
+}
+
+function renderChangeTimeline() {
+  if (!allChanges.length) return `<div style="padding:20px;text-align:center;color:var(--muted)">暂无变更记录</div>`;
+  const sorted = [...allChanges].sort((a, b) => b.date.localeCompare(a.date));
+  return sorted.slice(0, 5).map(c => {
+    const badgeClass = c.status === "已批准" ? "badge-green" : c.status === "草稿" ? "badge-gray" : "badge-orange";
+    return `
+      <div class="change-item" onclick="showECN('${c.id}')">
+        <div class="change-title">${c.title} <span class="badge ${badgeClass}">${c.status}</span></div>
+        <div class="change-meta">${c.id} · ${c.productName} · ${c.requester} · ${c.date}</div>
+        <div class="change-desc">${c.description}</div>
+      </div>
+    `;
+  }).join("");
+}
+
+// --- Product Detail ---
+function showProduct(id) {
+  const p = allProducts.find(x => x.id === id);
+  if (!p) { showToast("产品未找到", "error"); return; }
+  currentView = "product";
+  currentProductId = id;
+  const el = document.getElementById("content");
+  el.innerHTML = `
+    <div class="back-bar" onclick="renderHome()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5"/><polyline points="12 19 5 12 12 5"/></svg>
+      返回产品列表
+    </div>
+    <div class="prod-header">
+      <img class="prod-header-img" src="${p.image || "https://placehold.co/88x88/e0f2f1/00796B?text=P"}" alt="${p.name}" onerror="this.src='https://placehold.co/88x88/e0f2f1/00796B?text=P'">
+      <div class="prod-header-info">
+        <h2>${p.name}</h2>
+        <div class="codes">
+          <span>${p.code || "-"}</span>
+          <span>${p.id}</span>
+          <span>v${p.version || "1.0"}</span>
+        </div>
+        <p style="font-size:13px;color:var(--muted);margin-top:6px">${p.description || ""}</p>
+      </div>
+    </div>
+    <div class="prod-meta-grid">
+      <div class="prod-meta-item"><strong>规格</strong><span>${p.spec || "-"}</span></div>
+      <div class="prod-meta-item"><strong>材质</strong><span>${p.material || "-"}</span></div>
+      <div class="prod-meta-item"><strong>产品系列</strong><span>${p.series || "-"}</span></div>
+      <div class="prod-meta-item"><strong>当前版本</strong><span>${p.version || "V1.0"}</span></div>
+      <div class="prod-meta-item"><strong>发布状态</strong><span class="soStatus"><span class="status-dot ${p.status==="已发布"?"dot-green":"dot-orange"}"></span>${p.status}</span></div>
+      <div class="prod-meta-item"><strong>责任人</strong><span>${p.owner || "-"}</span></div>
+      <div class="prod-meta-item"><strong>更新日期</strong><span>${p.updatedAt || "-"}</span></div>
+      <div class="prod-meta-item"><strong>产品编码</strong><span style="font-family:var(--font-mono)">${p.code || "-"}</span></div>
+    </div>
+    ${renderSections(p)}
+  `;
+}
+
+function renderSections(p) {
+  let html = "";
+  // Drawings
+  if (p.drawings && p.drawings.length) {
+    html += `<div class="section-head" id="图纸库"><h3>图纸文件 (${p.drawings.length})</h3></div>
+      <div class="draw-grid">${p.drawings.map(d => `
+        <div class="draw-card">
+          <span class="draw-icon">${getDrawIcon(d.type)}</span>
+          <div class="name">${d.name}</div>
+          <div class="meta">${d.file} · ${d.size || ""}</div>
+          <div class="draw-actions">
+            <button class="draw-btn primary" onclick="showToast('在线预览: ${d.file}', 'info')">在线预览</button>
+            <button class="draw-btn" onclick="showToast('下载文件: ${d.file}', 'info')">下载文件</button>
+          </div>
+        </div>
+      `).join("")}</div>`;
+  }
+  // BOM
+  if (p.bom && p.bom.length) {
+    html += `<div class="section-head" id="BOM"><h3>BOM 清单 (${p.bom.length})</h3></div>
+      <div class="panel"><table class="data-table">
+        <thead><tr><th>层级</th><th>图号</th><th>名称</th><th>数量</th><th>单位</th><th>类型</th><th>来源</th></tr></thead>
+        <tbody>${p.bom.map(b => `
+          <tr><td>${"  ".repeat(b.level)}Lv.${b.level}</td><td style="font-family:var(--font-mono);font-size:12px">${b.part}</td><td>${b.name}</td><td>${b.qty}</td><td>${b.unit}</td><td>${b.type}</td><td>${b.source}</td></tr>
+        `).join("")}</tbody></table></div>`;
+  }
+  // Routings
+  if (p.routings && p.routings.length) {
+    html += `<div class="section-head" id="工艺路线"><h3>工艺路线 (${p.routings.length})</h3></div>
+      <div class="panel"><table class="data-table">
+        <thead><tr><th>工序</th><th>名称</th><th>部门</th><th>设备</th><th>工时</th><th>关键要求</th></tr></thead>
+        <tbody>${p.routings.map(r => `
+          <tr><td>${r.seq}</td><td>${r.name}</td><td>${r.dept}</td><td>${r.machine}</td><td>${r.time}</td><td>${r.keyReq || ""}</td></tr>
+        `).join("")}</tbody></table></div>`;
+  }
+  // SOPs
+  if (p.sops && p.sops.length) {
+    html += `<div class="section-head" id="SOP"><h3>SOP 文件 (${p.sops.length})</h3></div>
+      <div class="panel"><table class="data-table">
+        <thead><tr><th>编号</th><th>名称</th><th>分类</th></tr></thead>
+        <tbody>${p.sops.map(s => `
+          <tr><td style="font-family:var(--font-mono);font-size:12px">${s.code}</td><td>${s.name}</td><td>${s.category}</td></tr>
+        `).join("")}</tbody></table></div>`;
+  }
+  // Inspection
+  if (p.inspection && p.inspection.length) {
+    html += `<div class="section-head" id="检验规范"><h3>检验规范 (${p.inspection.length})</h3></div>
+      <div class="panel"><table class="data-table">
+        <thead><tr><th>检验项目</th><th>标准</th><th>方法</th><th>结果</th><th>实测值</th></tr></thead>
+        <tbody>${p.inspection.map(i => {
+          const dot = i.result === "pass" ? "dot-green" : i.result === "fail" ? "dot-orange" : "dot-gray";
+          return `<tr><td>${i.name}</td><td>${i.spec}</td><td>${i.method}</td><td><span class="soStatus"><span class="status-dot ${dot}"></span>${i.result}</span></td><td>${i.measured}</td></tr>`;
+        }).join("")}</tbody></table></div>`;
+  }
+  // Related ECN changes
+  if (p.changes && p.changes.length) {
+    const related = allChanges.filter(c => p.changes.includes(c.id));
+    html += `<div class="section-head" id="变更记录"><h3>关联变更记录 (${related.length})</h3></div>
+      <div class="panel"><div class="timeline">${related.map(c => {
+        const badgeClass = c.status === "已批准" ? "badge-green" : c.status === "草稿" ? "badge-gray" : "badge-orange";
+        return `<div class="change-item" onclick="showECN('${c.id}')">
+          <div class="change-title">${c.title} <span class="badge ${badgeClass}">${c.status}</span></div>
+          <div class="change-meta">${c.id} · ${c.type} · ${c.requester} · ${c.date}</div>
+          <div class="change-desc">${c.description}</div>
+        </div>`;
+      }).join("")}</div></div>`;
+  }
+  return html;
+}
+
+function getDrawIcon(type) {
+  const icons = { dwg: "\ud83d\udcd0", pdf: "\ud83d\udcc4", stp: "\ud83d\udd17", dxf: "\ud83d\udcd0", svg: "\ud83d\udd8c" };
+  return icons[type] || "\ud83d\udcc4";
+}
+
+// --- ECN Modal ---
+function showECN(id) {
+  const c = allChanges.find(x => x.id === id);
+  if (!c) { showToast("变更未找到", "error"); return; }
+  const overlay = document.getElementById("ecnOverlay");
+  const body = document.getElementById("ecnBody");
+  overlay.style.display = "flex";
+  const badgeClass = c.status === "已批准" ? "badge-green" : c.status === "草稿" ? "badge-gray" : "badge-orange";
+  const affected = c.affectedDepartments || [];
+  const allDepts = ["采购","生产","品质","销售","技术"];
+  body.innerHTML = `
+    <div class="ecn-header">
+      <h2>${c.title} <span class="badge ${badgeClass}">${c.status}</span></h2>
+      <div class="sub">${c.id} · ${c.productName} · ${c.type}</div>
+    </div>
+    <div class="ecn-meta-grid">
+      <div class="ecn-meta-item"><strong>产品</strong><span>${c.productName}</span></div>
+      <div class="ecn-meta-item"><strong>提出人</strong><span>${c.requester}</span></div>
+      <div class="ecn-meta-item"><strong>责任部门</strong><span>${c.department}</span></div>
+      <div class="ecn-meta-item"><strong>提出日期</strong><span>${c.date}</span></div>
+      <div class="ecn-meta-item"><strong>生效日期</strong><span>${c.effectiveDate || "未设置"}</span></div>
+      <div class="ecn-meta-item"><strong>审批状态</strong><span>${c.status}</span></div>
+    </div>
+    <div class="ecn-diff">
+      <div class="diff-row"><span class="diff-label">修改内容</span><span>${c.description}</span></div>
+      <div class="diff-row"><span class="diff-label">修改原因</span><span>${c.reason || ""}</span></div>
+      <div class="diff-row"><div class="diff-label">修改前</div><div class="diff-before">${c.before || ""}</div></div>
+      <div class="diff-row"><div class="diff-label">修改后</div><div class="diff-after">${c.after || ""}</div></div>
+    </div>
+    <div class="section-head" style="margin-bottom:6px"><h3>影响部门</h3></div>
+    <div class="ecn-affect">
+      ${allDepts.map(d => `<span class="tag ${affected.includes(d)?"active":""}">${d}</span>`).join("")}
+    </div>
+    ${c.relatedDocs && c.relatedDocs.length ? `
+      <div class="section-head" style="margin-bottom:6px"><h3>关联文件</h3></div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
+        ${c.relatedDocs.map(d => `<span class="tag active">${d}</span>`).join("")}
+      </div>` : ""}
+  `;
+}
+
+// --- Search ---
+function bindSearch() {
+  const input = document.getElementById("searchInput");
+  input.addEventListener("input", (e) => {
+    const q = e.target.value.trim();
+    if (!q) {
+      filteredProducts = [...allProducts];
+      renderHome();
       return;
     }
-
-    // Render filtered product table
-    var prodIds = {};
-    results.forEach(function(r){if(r.type==="product")prodIds[r.id]=true;});
-
-    var prods = PDM.data.products;
-    var changes = PDM.data.changes;
-    var filteredProds = prods.filter(function(p){return prodIds[p.id] || results.length <= 3;});
-    // If no product matches, show all products but highlight changes
-    if (Object.keys(prodIds).length === 0) filteredProds = prods;
-
-    var totalDrawings = 0, totalSOPs = 0;
-    filteredProds.forEach(function(p){totalDrawings += (p.drawings||[]).length; totalSOPs += (p.sops||[]).length;});
-    var h = "";
-
-    // Search result banner
-    h += '<div style="background:#E0F2F1;border-radius:var(--radius);padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between">'+
-      '<span style="font-size:14px;font-weight:600">\u641c\u7d22\u201c'+PDM.esc(q)+'\u201d \u5171 '+results.length+' \u6761\u7ed3\u679c</span>'+
-      '<button class="hero-btn hero-btn-primary" style="padding:6px 16px;font-size:12px" onclick="document.getElementById(\'searchInput\').value=\'\';PDM.render()">\u6e05\u9664\u7ed3\u679c</button></div>';
-
-    // Stats
-    h += '<div class="stats-row"><div class="stat-card"><div class="stat-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div><div><div class="stat-num">'+filteredProds.length+'</div><div class="stat-label">\u4ea7\u54c1</div></div></div>'+
-      '<div class="stat-card"><div class="stat-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div><div class="stat-num">'+totalDrawings+'</div><div class="stat-label">\u56fe\u7eb8</div></div></div>'+
-      '<div class="stat-card"><div class="stat-icon orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg></div><div><div class="stat-num">'+totalSOPs+'</div><div class="stat-label">SOP</div></div></div>'+
-      '<div class="stat-card"><div class="stat-icon purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><path d="M20.2 20.2A10 10 0 1 1 20 4l-2 2.5"/><path d="M22 2v6h-6"/></svg></div><div><div class="stat-num">'+changes.length+'</div><div class="stat-label">\u53d8\u66f4</div></div></div></div>';
-
-    // Module grid (shortened)
-    h += '<div class="module-grid">';
-    var mods=[
-      {ic:"#E8F0FE",cc:"#1A73E8",nm:"\u4ea7\u54c1\u5e93",cnt:prods.length+"\u4e2a"},
-      {ic:"#E0F2F1",cc:"var(--accent)",nm:"BOM",cnt:"\u591a\u5c42\u7ea7"},
-      {ic:"#FFF3E0",cc:"#E65100",nm:"\u53d8\u66f4\u8bb0\u5f55",cnt:changes.length+"\u6761"}
-    ];
-    mods.forEach(function(m){h+='<div class="module-card" onclick="PDM.toast(\'\u5404\u6a21\u5757\u5c06\u5728\u540e\u7eed\u7248\u672c\u5b9e\u73b0\')"><div class="module-icon" style="background:'+m.ic+';color:'+m.cc+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v7m0 6v7M2 12h7m6 0h7"/></svg></div><div class="module-name">'+m.nm+'</div><div class="module-count">'+m.cnt+'</div></div>';});
-    h += '</div>';
-
-    // Products + Changes
-    h += '<div class="content-grid">';
-    h += '<div class="panel" id="section-products"><div class="panel-header"><h4>\u4ea7\u54c1\u5217\u8868</h4><span class="panel-tag">'+filteredProds.length+'\u4e2a</span></div><div class="table-wrap"><table><thead><tr><th></th><th>\u4ea7\u54c1\u540d\u79f0</th><th>\u7f16\u7801</th><th>\u89c4\u683c</th><th>\u6750\u8d28</th><th>\u72b6\u6001</th><th>\u7248\u672c</th></tr></thead><tbody>';
-    filteredProds.forEach(function(p){
-      var dc = "dot-gray";
-      if(p.status==="\u5df2\u53d1\u5e03") dc = "dot-green";
-      else if(p.status==="\u5f85\u8bc4\u5ba1"||p.status==="\u8bd5\u5236") dc = "dot-orange";
-      h += '<tr onclick="PDM.showProduct(\''+p.id+'\')" style="cursor:pointer">'+
-        '<td><img class="prod-img" src="'+p.image+'" alt="" onerror="this.style.display=\'none\'"></td>'+
-        '<td><strong>'+PDM.esc(p.name)+'</strong></td>'+
-        '<td style="font-size:12px;color:var(--muted);font-family:var(--font-mono)">'+PDM.esc(p.id)+'</td>'+
-        '<td style="font-size:12px;color:var(--muted)">'+PDM.esc(p.spec)+'</td>'+
-        '<td>'+PDM.esc(p.material)+'</td>'+
-        '<td><span class="soStatus"><span class="status-dot '+dc+'"></span>'+PDM.esc(p.status)+'</span></td>'+
-        '<td>'+PDM.esc(p.version)+'</td></tr>';
+    const lower = q.toLowerCase();
+    filteredProducts = allProducts.filter(p => {
+      const searchText = [
+        p.name, p.code, p.spec, p.material, p.series, p.description,
+        ...(p.category || []), p.id
+      ].filter(Boolean).join(" ").toLowerCase();
+      return searchText.includes(lower);
     });
-    h += '</tbody></table></div></div>';
+    renderSearchResult(q);
+  });
+}
 
-    h += '<div class="panel" id="section-changes"><div class="panel-header"><h4>\u6700\u8fd1\u53d8\u66f4\u8bb0\u5f55</h4><span class="panel-tag">'+changes.length+'\u6761</span></div><div class="timeline">';
-    changes.forEach(function(c){
-      var bc = c.status==="\u5df2\u6279\u51c6"?"badge-green":"badge-orange";
-      h += '<div class="change-item" onclick="PDM.showChange(\''+c.id+'\')"><div class="change-title">'+PDM.esc(c.title)+' <span class="badge '+bc+'">'+PDM.esc(c.status)+'</span></div><div class="change-meta">'+PDM.esc(c.id)+' \u00b7 '+PDM.esc(c.requester)+' \u00b7 '+PDM.esc(c.date)+'</div><div class="change-desc">'+PDM.esc(c.desc)+'</div></div>';
-    });
-    h += '</div></div></div>';
+function renderSearchResult(q) {
+  currentView = "search";
+  const el = document.getElementById("content");
+  const stats = calcStats(filteredProducts);
+  el.innerHTML = `
+    <div class="back-bar" onclick="clearSearch()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5"/><polyline points="12 19 5 12 12 5"/></svg>
+      清除搜索
+    </div>
+    <div class="section-head"><h3>搜索结果: "${q}"</h3><p>${filteredProducts.length} 个产品</p></div>
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div><div><div class="stat-num">${stats.products}</div><div class="stat-label">产品</div></div></div>
+      <div class="stat-card"><div class="stat-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div><div class="stat-num">${stats.drawings}</div><div class="stat-label">图纸</div></div></div>
+      <div class="stat-card"><div class="stat-icon orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div><div class="stat-num">${stats.sops}</div><div class="stat-label">SOP</div></div></div>
+      <div class="stat-card"><div class="stat-icon purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="9"/></svg></div><div><div class="stat-num">${stats.changes}</div><div class="stat-label">变更</div></div></div>
+    </div>
+    <div class="panel">
+      <table class="data-table">
+        <thead><tr><th>图片</th><th>产品名称</th><th>编码</th><th>规格</th><th>材质</th><th>状态</th><th>版本</th></tr></thead>
+        <tbody>${renderProductRows(filteredProducts)}</tbody>
+      </table>
+    </div>
+  `;
+}
 
-    h += '<div class="footer">\u00a9 2026 FRANTA PDM &middot; Static MVP v0.1.0 &middot; \u5236\u9020\u4e1a\u7248 GitHub</div>';
-    document.getElementById("view-container").innerHTML = h;
-  },
+function clearSearch() {
+  document.getElementById("searchInput").value = "";
+  filteredProducts = [...allProducts];
+  renderHome();
+}
 
-  render: function() {
-    var prods = PDM.data.products;
-    var changes = PDM.data.changes;
-    var totalDrawings = 0, totalSOPs = 0;
-    prods.forEach(function(p){totalDrawings += (p.drawings||[]).length; totalSOPs += (p.sops||[]).length;});
-    var h = "";
+// --- Changes page ---
+function renderChanges() {
+  currentView = "changes";
+  const el = document.getElementById("content");
+  el.innerHTML = `
+    <div class="back-bar" onclick="renderHome()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5"/><polyline points="12 19 5 12 12 5"/></svg>
+      返回首页
+    </div>
+    <div class="section-head"><h3>全部变更记录 (${allChanges.length})</h3></div>
+    <div class="panel"><div class="timeline">${allChanges.sort((a,b) => b.date.localeCompare(a.date)).map(c => {
+      const badgeClass = c.status === "已批准" ? "badge-green" : c.status === "草稿" ? "badge-gray" : "badge-orange";
+      return `<div class="change-item" onclick="showECN('${c.id}')">
+        <div class="change-title">${c.title} <span class="badge ${badgeClass}">${c.status}</span></div>
+        <div class="change-meta">${c.id} · ${c.productName} · ${c.type} · ${c.requester} · ${c.date}</div>
+        <div class="change-desc">${c.description}</div>
+      </div>`;
+    }).join("")}</div></div>
+    <div class="footer">FRANTA PDM v2.0 · 产品数据管理平台</div>
+  `;
+}
 
-    h += '<div class="hero"><h2>\u5de5\u7a0b\u6570\u636e\uff0c\u50cf\u4ee3\u7801\u4e00\u6837\u7ba1\u7406</h2><p>FRANTA PDM \u5c06\u5236\u9020\u4e1a\u7684\u4ea7\u54c1\u8d44\u6599\u3001\u56fe\u7eb8\u3001BOM\u3001\u5de5\u827a\u8def\u7ebf\u3001SOP\u3001\u68c0\u9a8c\u89c4\u8303\u548c\u53d8\u66f4\u8bb0\u5f55\u7edf\u4e00\u7ba1\u7406\u3002</p><div class="hero-actions"><button class="hero-btn hero-btn-primary" onclick="document.getElementById(\'section-products\').scrollIntoView({behavior:\'smooth\'})"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>\u6d4f\u89c8\u4ea7\u54c1\u5e93</button><button class="hero-btn hero-btn-secondary" onclick="document.getElementById(\'section-changes\').scrollIntoView({behavior:\'smooth\'})">\u67e5\u770b\u53d8\u66f4\u8bb0\u5f55</button></div></div>';
+// --- Toast ---
+function showToast(msg, type) {
+  const container = document.getElementById("toastContainer");
+  const t = document.createElement("div");
+  t.className = "toast";
+  t.textContent = msg;
+  if (type === "error") t.style.borderLeft = "3px solid #E65100";
+  else t.style.borderLeft = "3px solid var(--accent)";
+  container.appendChild(t);
+  setTimeout(() => { t.style.opacity = "0"; setTimeout(() => t.remove(), 300); }, 2500);
+}
 
-    h += '<div class="stats-row"><div class="stat-card"><div class="stat-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div><div><div class="stat-num">'+prods.length+'</div><div class="stat-label">\u4ea7\u54c1\u6570\u91cf</div></div></div><div class="stat-card"><div class="stat-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div><div class="stat-num">'+totalDrawings+'</div><div class="stat-label">\u56fe\u7eb8\u6570\u91cf</div></div></div><div class="stat-card"><div class="stat-icon orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg></div><div><div class="stat-num">'+totalSOPs+'</div><div class="stat-label">SOP \u6570\u91cf</div></div></div><div class="stat-card"><div class="stat-icon purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><path d="M20.2 20.2A10 10 0 1 1 20 4l-2 2.5"/><path d="M22 2v6h-6"/></svg></div><div><div class="stat-num">'+changes.length+'</div><div class="stat-label">\u53d8\u66f4\u8bb0\u5f55</div></div></div></div>';
-
-    h += '<div class="section-header"><div><h3>\u529f\u80fd\u6a21\u5757</h3><p>\u70b9\u51fb\u8fdb\u5165\u5404\u7ba1\u7406\u6a21\u5757</p></div></div><div class="module-grid">';
-    var mods=[
-      {ic:"#E8F0FE",cc:"#1A73E8",nm:"\u4ea7\u54c1\u5e93",cnt:prods.length+"\u4e2a\u4ea7\u54c1"},
-      {ic:"#E8F0FE",cc:"#1A73E8",nm:"\u56fe\u7eb8\u5e93",cnt:totalDrawings+"\u4efd\u56fe\u7eb8"},
-      {ic:"#E0F2F1",cc:"var(--accent)",nm:"BOM",cnt:"\u591a\u5c42\u7ea7\u7269\u6599"},
-      {ic:"#FFF3E0",cc:"#E65100",nm:"\u5de5\u827a\u8def\u7ebf",cnt:prods.length+"\u6761"},
-      {ic:"#F3E8FF",cc:"#7C3AED",nm:"SOP",cnt:totalSOPs+"\u4efd"},
-      {ic:"#E0F2F1",cc:"var(--accent)",nm:"\u68c0\u9a8c\u89c4\u8303",cnt:"\u8d28\u91cf\u68c0\u6d4b"},
-      {ic:"#FFF3E0",cc:"#E65100",nm:"\u53d8\u66f4\u8bb0\u5f55",cnt:changes.length+"\u6761"}
-    ];
-    mods.forEach(function(m){h+='<div class="module-card" onclick="PDM.toast(\''+m.nm+'\u6a21\u5757\u5c06\u5728\u540e\u7eed\u7248\u672c\u5b9e\u73b0\')"><div class="module-icon" style="background:'+m.ic+';color:'+m.cc+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v7m0 6v7M2 12h7m6 0h7"/></svg></div><div class="module-name">'+m.nm+'</div><div class="module-count">'+m.cnt+'</div></div>';});
-    h += '</div>';
-
-    h += '<div class="content-grid">';
-    h += '<div class="panel" id="section-products"><div class="panel-header"><h4>\u4ea7\u54c1\u5217\u8868</h4><span class="panel-tag">'+prods.length+'\u4e2a\u4ea7\u54c1</span></div><div class="table-wrap"><table><thead><tr><th></th><th>\u4ea7\u54c1\u540d\u79f0</th><th>\u7f16\u7801</th><th>\u89c4\u683c</th><th>\u6750\u8d28</th><th>\u72b6\u6001</th><th>\u7248\u672c</th></tr></thead><tbody>';
-    prods.forEach(function(p){
-      var dc = "dot-gray";
-      if(p.status==="\u5df2\u53d1\u5e03") dc = "dot-green";
-      else if(p.status==="\u5f85\u8bc4\u5ba1"||p.status==="\u8bd5\u5236") dc = "dot-orange";
-      h += '<tr onclick="PDM.showProduct(\''+p.id+'\')" style="cursor:pointer">'+
-        '<td><img class="prod-img" src="'+p.image+'" alt="" onerror="this.style.display=\'none\'"></td>'+
-        '<td><strong>'+PDM.esc(p.name)+'</strong></td>'+
-        '<td style="font-size:12px;color:var(--muted);font-family:var(--font-mono)">'+PDM.esc(p.id)+'</td>'+
-        '<td style="font-size:12px;color:var(--muted)">'+PDM.esc(p.spec)+'</td>'+
-        '<td>'+PDM.esc(p.material)+'</td>'+
-        '<td><span class="soStatus"><span class="status-dot '+dc+'"></span>'+PDM.esc(p.status)+'</span></td>'+
-        '<td>'+PDM.esc(p.version)+'</td></tr>';
-    });
-    h += '</tbody></table></div></div>';
-
-    h += '<div class="panel" id="section-changes"><div class="panel-header"><h4>\u6700\u8fd1\u53d8\u66f4\u8bb0\u5f55</h4><span class="panel-tag">'+changes.length+'\u6761</span></div><div class="timeline">';
-    changes.forEach(function(c){
-      var bc = c.status==="\u5df2\u6279\u51c6"?"badge-green":"badge-orange";
-      h += '<div class="change-item" onclick="PDM.showChange(\''+c.id+'\')"><div class="change-title">'+PDM.esc(c.title)+' <span class="badge '+bc+'">'+PDM.esc(c.status)+'</span></div><div class="change-meta">'+PDM.esc(c.id)+' \u00b7 '+PDM.esc(c.requester)+' \u00b7 '+PDM.esc(c.date)+'</div><div class="change-desc">'+PDM.esc(c.desc)+'</div></div>';
-    });
-    h += '</div></div></div>';
-
-    h += '<div class="footer">\u00a9 2026 FRANTA PDM &middot; Static MVP v0.1.0 &middot; \u5236\u9020\u4e1a\u7248 GitHub</div>';
-    document.getElementById("view-container").innerHTML = h;
-  },
-
-  esc: function(s) {
-    if (s == null) return "";
-    return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
-  },
-
-  showProduct: function(id) {
-    var p = null;
-    PDM.data.products.forEach(function(x){if(x.id===id)p=x});
-    if (!p) return;
-    var h = '<button class="modal-close" onclick="PDM.closeModal()">\u2715</button>'+
-      '<div style="display:flex;align-items:center;gap:16px;margin-bottom:12px">'+
-      '<img src="'+p.image+'" alt="" style="width:72px;height:72px;border-radius:var(--radius-sm);object-fit:cover;background:var(--soft)" onerror="this.style.display=\'none\'">'+
-      '<div><h2>'+PDM.esc(p.name)+'</h2><div class="modal-sub">'+PDM.esc(p.id)+' \u00b7 '+PDM.esc(p.spec)+'</div></div></div>'+
-      '<div class="meta-grid">'+
-      '<div><strong>\u7f16\u7801</strong>'+PDM.esc(p.id)+'</div>'+
-      '<div><strong>\u6750\u8d28</strong>'+PDM.esc(p.material)+'</div>'+
-      '<div><strong>\u89c4\u683c</strong>'+PDM.esc(p.spec)+'</div>'+
-      '<div><strong>\u7cfb\u5217</strong>'+PDM.esc(p.series)+'</div>'+
-      '<div><strong>\u538b\u529b</strong>'+PDM.esc(p.pressure)+'</div>'+
-      '<div><strong>\u8fde\u63a5</strong>'+PDM.esc(p.connection)+'</div>'+
-      '<div><strong>\u72b6\u6001</strong>'+PDM.esc(p.status)+'</div>'+
-      '<div><strong>\u7248\u672c</strong>'+PDM.esc(p.version)+'</div>'+
-      '<div><strong>\u8d1f\u8d23\u4eba</strong>'+PDM.esc(p.owner)+'</div></div>'+
-      '<div class="desc">'+PDM.esc(p.pdm_description||p.description)+'</div>';
-
-    if (p.drawings && p.drawings.length) {
-      h += '<div class="sec-title">\u5173\u8054\u56fe\u7eb8 ('+p.drawings.length+')</div>';
-      p.drawings.forEach(function(d){h += '<div class="rel-row"><span>'+PDM.esc(d.name)+'</span><span style="color:var(--muted);font-size:12px;font-family:var(--font-mono)">'+PDM.esc(d.file)+' \u00b7 '+PDM.esc(d.version)+'</span></div>';});
+// --- Modal ---
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("ecnClose").addEventListener("click", () => {
+    document.getElementById("ecnOverlay").style.display = "none";
+  });
+  document.getElementById("ecnOverlay").addEventListener("click", (e) => {
+    if (e.target === e.currentTarget) {
+      document.getElementById("ecnOverlay").style.display = "none";
     }
-    if (p.bom && p.bom.length) {
-      h += '<div class="sec-title">BOM ('+p.bom.length+'\u6761)</div>';
-      p.bom.forEach(function(b){
-        var sb = b.source==="\u81ea\u5236"?"badge-green":"badge-orange";
-        h += '<div class="rel-row"><span>'+PDM.esc(b.part)+' \u2014 '+PDM.esc(b.name)+'</span><span><span class="badge '+sb+'" style="font-size:10px">'+PDM.esc(b.source)+'</span> \u00d7'+b.qty+' '+PDM.esc(b.unit)+'</span></div>';
-      });
-    }
-    if (p.sops && p.sops.length) {
-      h += '<div class="sec-title">\u5173\u8054 SOP ('+p.sops.length+')</div>';
-      p.sops.forEach(function(s){h += '<div class="rel-row"><span class="badge badge-green" style="font-size:10px">'+PDM.esc(s.code)+'</span><span>'+PDM.esc(s.name)+'</span></div>';});
-    }
-    if (p.routings && p.routings.length) {
-      h += '<div class="sec-title">\u5de5\u827a\u8def\u7ebf ('+p.routings.length+'\u9053\u5de5\u5e8f)</div>';
-      p.routings.forEach(function(r){h += '<div class="rel-row"><span>#'+r.seq+' '+PDM.esc(r.name)+'</span><span style="color:var(--muted);font-size:12px">'+PDM.esc(r.dept)+'</span></div>';});
-    }
-    document.getElementById("modalContent").innerHTML = h;
-    document.getElementById("modalOverlay").classList.add("show");
-  },
+  });
+  init();
+});
 
-  showChange: function(id) {
-    var c = null;
-    PDM.data.changes.forEach(function(x){if(x.id===id)c=x});
-    if (!c) return;
-    var bc = c.status==="\u5df2\u6279\u51c6"?"badge-green":"badge-orange";
-    var h = '<button class="modal-close" onclick="PDM.closeModal()">\u2715</button><h2>'+PDM.esc(c.title)+'</h2><div class="modal-sub">'+PDM.esc(c.id)+' <span class="badge '+bc+'">'+PDM.esc(c.status)+'</span></div><div class="meta-grid"><div><strong>\u4ea7\u54c1</strong>'+PDM.esc(c.productName)+'</div><div><strong>\u7c7b\u578b</strong>'+PDM.esc(c.type)+'</div><div><strong>\u4f18\u5148\u7ea7</strong>'+PDM.esc(c.priority)+'</div><div><strong>\u7533\u8bf7\u4eba</strong>'+PDM.esc(c.requester)+'</div><div><strong>\u65e5\u671f</strong>'+PDM.esc(c.date)+'</div><div><strong>\u72b6\u6001</strong>'+PDM.esc(c.status)+'</div></div><div class="desc">'+PDM.esc(c.desc)+'</div>';
-    document.getElementById("modalContent").innerHTML = h;
-    document.getElementById("modalOverlay").classList.add("show");
-  },
-
-  closeModal: function() {
-    document.getElementById("modalOverlay").classList.remove("show");
-  },
-
-  toast: function(msg) {
-    var c = document.getElementById("toastContainer");
-    var t = document.createElement("div");
-    t.className = "toast";
-    t.textContent = msg;
-    c.appendChild(t);
-    setTimeout(function(){t.style.opacity="0";t.style.transform="translateY(8px)";t.style.transition="all .3s"}, 2200);
-    setTimeout(function(){t.remove()}, 2800);
-  }
-};
-
-document.addEventListener("DOMContentLoaded", function(){PDM.init();});
+// --- Scroll helper for module cards ---
+function scrollToSection(name) {
+  const el = document.getElementById(name);
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+}
