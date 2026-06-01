@@ -1,9 +1,9 @@
-// FRANTA PDM v3 - Runtime B2B data source
+﻿// FRANTA PDM v3 - Runtime B2B data source
 // Products loaded directly from B2B project at runtime
 // No separate product data maintenance needed
 
 const B2B_DATA_URL = "/api/b2b-products";
-const B2B_IMAGE_BASE = "https://raw.githubusercontent.com/Sggg5/b2b/main/public";
+const B2B_IMAGE_BASE = "https://b2b.sggg.cc.cd";
 const LOCAL_FALLBACK = "data/products.json";
 
 let allProducts = [];
@@ -77,7 +77,7 @@ function enrichProduct(bp) {
     owner: bp.owner || "",
     updatedAt: new Date().toISOString().slice(0, 10),
     description: descParts.join(" | "),
-    image: bp.image ? B2B_IMAGE_BASE + bp.image : "",
+    image: bp.image ? (bp.image.startsWith("/") ? B2B_IMAGE_BASE + bp.image : bp.image) : "",
     drawings: buildDrawings(bp),
     bom: [],
     routings: [],
@@ -90,8 +90,8 @@ function enrichProduct(bp) {
 // --- Build initial drawings from B2B CAD/PDF links ---
 function buildDrawings(bp) {
   const dwgs = [];
-  if (bp.pdf) dwgs.push({ id: bp.id + "-PDF", name: bp.name + " 产品样本 (PDF)", file: bp.pdf.replace("/files/", "files/"), url: B2B_IMAGE_BASE + "/" + bp.pdf.replace(/^\//, ""), type: "pdf", size: "" });
-  if (bp.cad) dwgs.push({ id: bp.id + "-CAD", name: bp.name + " CAD图纸 (DWG)", file: bp.cad.replace("/files/", "files/"), url: B2B_IMAGE_BASE + "/" + bp.cad.replace(/^\//, ""), type: "dwg", size: "" });
+  if (bp.pdf) dwgs.push({ id: bp.id + "-PDF", name: bp.name + " 产品样本 (PDF)", file: bp.pdf, type: "pdf", size: "", url: "" });
+  if (bp.cad) dwgs.push({ id: bp.id + "-CAD", name: bp.name + " CAD图纸 (DWG)", file: bp.cad, type: "dwg", size: "", url: "" });
   return dwgs;
 }
 
@@ -281,7 +281,7 @@ function renderProductRows(products) {
   if (!products.length) return `<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--muted)">没有匹配的产品</td></tr>`;
   return products.map(p => `
     <tr onclick="showProduct('${p.id}')" style="cursor:pointer">
-      <td><img class="prod-img" src="${p.image || ""}" alt="${p.name}" onerror="this.onerror=null;this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2242%22 height=%2242%22><rect fill=%22%23e0f2f1%22 width=%2242%22 height=%2242%22/><text fill=%22%2300796B%22 x=%2221%22 y=%2226%22 font-size=%2216%22 text-anchor=%22middle%22 font-family=%22sans-serif%22>P</text></svg>'"></td>
+      <td><img class="prod-img" src="${p.image}" alt="${p.name}" onerror="this.style.display='none'"></td>
       <td><strong>${p.name}</strong></td>
       <td style="font-family:var(--font-mono);font-size:12px">${p.code || "-"}</td>
       <td>${p.spec || "-"}</td>
@@ -325,7 +325,7 @@ function showProduct(id) {
       返回产品列表
     </div>
     <div class="prod-header">
-      <img class="prod-header-img" src="${p.image || ""}" alt="${p.name}" onerror="this.onerror=null;this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2288%22 height=%2288%22><rect fill=%22%23e0f2f1%22 width=%2288%22 height=%2288%22/><text fill=%22%2300796B%22 x=%2244%22 y=%2250%22 font-size=%2232%22 text-anchor=%22middle%22 font-family=%22sans-serif%22>P</text></svg>'">
+      <img class="prod-header-img" src="${p.image}" alt="${p.name}" onerror="this.style.display='none'">
       <div class="prod-header-info">
         <h2>${p.name}</h2>
         <div class="codes">
@@ -364,8 +364,8 @@ function renderSections(p) {
           <div class="name">${d.name}</div>
           <div class="meta">${d.file} · ${d.size || ""}</div>
           <div class="draw-actions">
-            <button class="draw-btn primary" onclick="window.open('${d.url || ""}', '_blank')">在线预览</button>
-            <button class="draw-btn" onclick="window.open('${d.url || ""}', '_blank')">下载文件</button>
+            <button class="draw-btn primary" onclick="showToast('图纸文件（待上传）', 'info')" ${!d.url ? "disabled" : ""}>在线预览</button>
+            <button class="draw-btn" onclick="showToast('图纸文件（待上传）', 'info')" ${!d.url ? "disabled" : ""}>下载文件</button>
           </div>
         </div>
       `).join("")}</div>`;

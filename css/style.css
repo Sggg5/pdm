@@ -163,3 +163,6 @@ tr:hover td{background:#E0F2F1}
 /* Module card */
 .module-card{cursor:default}
 .module-card[data-active]{cursor:pointer}
+
+/* Disabled button */
+.draw-btn[disabled]{opacity:0.4;cursor:not-allowed}
