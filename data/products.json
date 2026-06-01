@@ -1,0 +1,415 @@
+[
+  {
+    "id": "PRD-001",
+    "slug": "grooved-clamp-coupling",
+    "name": "沟槽式卡箍接头",
+    "category": "沟槽管件",
+    "material": "SUS304",
+    "size": "DN125-DN300",
+    "pressure": "PN16",
+    "connection": "沟槽连接",
+    "description": "沟槽式卡箍接头，源自产品样本识别，适用于工业与水务管路系统选型。",
+    "image": "images/grooved-clamp-coupling.png",
+    "pdf": "/files/products/pdf/grooved-clamp-coupling.pdf",
+    "cad": "/files/products/cad/grooved-clamp-coupling.dwg",
+    "spec": "DN125-DN300",
+    "version": "V1.8",
+    "status": "已发布",
+    "series": "沟槽系列",
+    "owner": "褚永星",
+    "updatedAt": "2026-05-20",
+    "pdm_description": "DN65 沟槽式卡箍连接件，用于消防/给水管道系统，采用 304 不锈钢精密铸造，EPDM 密封圈。",
+    "drawings": [
+      {
+        "id": "DRW-001",
+        "name": "卡箍装配图",
+        "file": "CP65-Assembly.dwg",
+        "type": "dwg",
+        "version": "V1.8"
+      },
+      {
+        "id": "DRW-002",
+        "name": "卡箍本体图-左",
+        "file": "CP65-Body-L.dwg",
+        "type": "dwg",
+        "version": "V1.8"
+      },
+      {
+        "id": "DRW-003",
+        "name": "卡箍本体图-右",
+        "file": "CP65-Body-R.dwg",
+        "type": "dwg",
+        "version": "V1.8"
+      },
+      {
+        "id": "DRW-004",
+        "name": "密封圈图",
+        "file": "CP65-Seal.pdf",
+        "type": "pdf",
+        "version": "V1.2"
+      }
+    ],
+    "bom": [
+      {
+        "part": "CP-65-00",
+        "name": "DN65 卡箍接头总成",
+        "qty": 1,
+        "unit": "套",
+        "type": "装配件",
+        "source": "自制"
+      },
+      {
+        "part": "CP-65-01",
+        "name": "卡箍本体(左)",
+        "qty": 1,
+        "unit": "件",
+        "type": "铸造件",
+        "source": "自制",
+        "material": "304"
+      },
+      {
+        "part": "CP-65-02",
+        "name": "卡箍本体(右)",
+        "qty": 1,
+        "unit": "件",
+        "type": "铸造件",
+        "source": "自制",
+        "material": "304"
+      },
+      {
+        "part": "CP-65-03",
+        "name": "密封圈 EPDM",
+        "qty": 1,
+        "unit": "件",
+        "type": "橡胶件",
+        "source": "外购",
+        "material": "EPDM"
+      },
+      {
+        "part": "CP-65-04",
+        "name": "螺栓 M16x60",
+        "qty": 2,
+        "unit": "件",
+        "type": "标准件",
+        "source": "外购"
+      },
+      {
+        "part": "CP-65-05",
+        "name": "螺母 M16",
+        "qty": 2,
+        "unit": "件",
+        "type": "标准件",
+        "source": "外购"
+      }
+    ],
+    "sops": [
+      {
+        "code": "SOP-WELD-001",
+        "name": "卡箍焊接作业指导书"
+      },
+      {
+        "code": "SOP-SEAL-002",
+        "name": "密封圈装配作业要求"
+      },
+      {
+        "code": "QC-CP-065",
+        "name": "卡箍检验规范"
+      }
+    ],
+    "routings": [
+      {
+        "seq": 10,
+        "name": "铸造",
+        "dept": "铸造车间"
+      },
+      {
+        "seq": 20,
+        "name": "清理",
+        "dept": "铸造车间"
+      },
+      {
+        "seq": 30,
+        "name": "热处理",
+        "dept": "热处理"
+      },
+      {
+        "seq": 40,
+        "name": "机加工",
+        "dept": "机加工"
+      },
+      {
+        "seq": 50,
+        "name": "密封圈装配",
+        "dept": "装配"
+      },
+      {
+        "seq": 60,
+        "name": "打压测试",
+        "dept": "品质部"
+      },
+      {
+        "seq": 70,
+        "name": "表面处理",
+        "dept": "表面处理"
+      },
+      {
+        "seq": 80,
+        "name": "检验包装",
+        "dept": "品质部"
+      }
+    ]
+  },
+  {
+    "id": "PRD-002",
+    "slug": "grooved-tee",
+    "name": "沟槽式等径三通",
+    "category": "沟槽管件",
+    "material": "SUS304",
+    "size": "DN125-DN300",
+    "pressure": "PN16",
+    "connection": "沟槽连接",
+    "description": "沟槽式等径三通，源自产品样本识别，适用于工业与水务管路系统选型。",
+    "image": "images/grooved-tee.png",
+    "pdf": "/files/products/pdf/grooved-tee.pdf",
+    "cad": "/files/products/cad/grooved-tee.dwg",
+    "spec": "DN125-DN300",
+    "version": "V2.1",
+    "status": "待评审",
+    "series": "沟槽系列",
+    "owner": "技术质量部",
+    "updatedAt": "2026-05-25",
+    "pdm_description": "DN100xDN50 沟槽机械三通，用于管道分支连接，主管 DN100、支管 DN50，精密铸造工艺。",
+    "drawings": [
+      {
+        "id": "DRW-005",
+        "name": "三通装配图",
+        "file": "GT100-Assembly.dwg",
+        "type": "dwg",
+        "version": "V2.1"
+      },
+      {
+        "id": "DRW-006",
+        "name": "三通主体图",
+        "file": "GT100-Tee.dwg",
+        "type": "dwg",
+        "version": "V2.0"
+      },
+      {
+        "id": "DRW-007",
+        "name": "三通尺寸图",
+        "file": "GT100-Dimensions.pdf",
+        "type": "pdf",
+        "version": "V2.1"
+      }
+    ],
+    "bom": [
+      {
+        "part": "GT-100-50-00",
+        "name": "DN100xDN50 三通总成",
+        "qty": 1,
+        "unit": "套",
+        "type": "装配件",
+        "source": "自制"
+      },
+      {
+        "part": "GT-100-50-01",
+        "name": "三通主体",
+        "qty": 1,
+        "unit": "件",
+        "type": "铸造件",
+        "source": "自制",
+        "material": "304"
+      },
+      {
+        "part": "GT-100-50-02",
+        "name": "DN100 密封圈",
+        "qty": 2,
+        "unit": "件",
+        "type": "橡胶件",
+        "source": "外购",
+        "material": "EPDM"
+      },
+      {
+        "part": "GT-100-50-03",
+        "name": "DN50 密封圈",
+        "qty": 1,
+        "unit": "件",
+        "type": "橡胶件",
+        "source": "外购",
+        "material": "EPDM"
+      },
+      {
+        "part": "GT-100-50-04",
+        "name": "螺栓 M16x65",
+        "qty": 4,
+        "unit": "件",
+        "type": "标准件",
+        "source": "外购"
+      },
+      {
+        "part": "GT-100-50-05",
+        "name": "螺母 M16",
+        "qty": 4,
+        "unit": "件",
+        "type": "标准件",
+        "source": "外购"
+      }
+    ],
+    "sops": [
+      {
+        "code": "SOP-WELD-001",
+        "name": "焊接作业指导书"
+      },
+      {
+        "code": "SOP-TEST-002",
+        "name": "气密测试操作规范"
+      }
+    ],
+    "routings": [
+      {
+        "seq": 10,
+        "name": "铸造",
+        "dept": "铸造车间"
+      },
+      {
+        "seq": 20,
+        "name": "清理",
+        "dept": "铸造车间"
+      },
+      {
+        "seq": 30,
+        "name": "机加工",
+        "dept": "机加工"
+      },
+      {
+        "seq": 40,
+        "name": "气密测试",
+        "dept": "品质部"
+      },
+      {
+        "seq": 50,
+        "name": "表面处理",
+        "dept": "表面处理"
+      },
+      {
+        "seq": 60,
+        "name": "检验包装",
+        "dept": "品质部"
+      }
+    ]
+  },
+  {
+    "id": "PRD-003",
+    "slug": "grooved-90-elbow",
+    "name": "沟槽式90°弯头",
+    "category": "沟槽管件",
+    "material": "SUS304",
+    "size": "DN125-DN300",
+    "pressure": "PN16",
+    "connection": "沟槽连接",
+    "description": "沟槽式90°弯头，源自产品样本识别，适用于工业与水务管路系统选型。",
+    "image": "images/grooved-90-elbow.png",
+    "pdf": "/files/products/pdf/grooved-90-elbow.pdf",
+    "cad": "/files/products/cad/grooved-90-elbow.dwg",
+    "spec": "DN125-DN300",
+    "version": "V1.2",
+    "status": "已发布",
+    "series": "沟槽系列",
+    "owner": "褚永星",
+    "updatedAt": "2026-06-01",
+    "pdm_description": "40mm 90度 沟槽弯头，用于管道转向连接，采用 304 不锈钢材料，管壁厚度 1.5mm。",
+    "drawings": [
+      {
+        "id": "DRW-008",
+        "name": "弯头三维模型",
+        "file": "EL40-90.stp",
+        "type": "stp",
+        "version": "V1.2"
+      },
+      {
+        "id": "DRW-009",
+        "name": "弯头尺寸图",
+        "file": "EL40-90-Dimension.dwg",
+        "type": "dwg",
+        "version": "V1.2"
+      },
+      {
+        "id": "DRW-010",
+        "name": "弯头焊接检验图",
+        "file": "EL40-90-Weld.pdf",
+        "type": "pdf",
+        "version": "V1.1"
+      }
+    ],
+    "bom": [
+      {
+        "part": "EL-40-00",
+        "name": "40 90度 弯头总成",
+        "qty": 1,
+        "unit": "件",
+        "type": "加工件",
+        "source": "自制"
+      },
+      {
+        "part": "EL-40-01",
+        "name": "弯头管坯 40mm",
+        "qty": 1,
+        "unit": "件",
+        "type": "加工件",
+        "source": "外协",
+        "material": "304"
+      }
+    ],
+    "sops": [
+      {
+        "code": "SOP-WELD-001",
+        "name": "焊接作业指导书"
+      },
+      {
+        "code": "SOP-PICK-003",
+        "name": "弯头酸洗工艺规范"
+      },
+      {
+        "code": "QC-EL-040",
+        "name": "弯头检验规范"
+      }
+    ],
+    "routings": [
+      {
+        "seq": 10,
+        "name": "下料",
+        "dept": "制管"
+      },
+      {
+        "seq": 20,
+        "name": "成型",
+        "dept": "成型"
+      },
+      {
+        "seq": 30,
+        "name": "焊接",
+        "dept": "制管/成型"
+      },
+      {
+        "seq": 40,
+        "name": "整形",
+        "dept": "成型"
+      },
+      {
+        "seq": 50,
+        "name": "酸洗",
+        "dept": "表面处理"
+      },
+      {
+        "seq": 60,
+        "name": "检验",
+        "dept": "品质部"
+      },
+      {
+        "seq": 70,
+        "name": "包装",
+        "dept": "仓储"
+      }
+    ]
+  }
+]

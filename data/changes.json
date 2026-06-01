@@ -1,0 +1,62 @@
+[
+  {
+    "id": "CHANGE-2026-001",
+    "title": "40 90度弯头壁厚调整",
+    "productId": "PRD-003",
+    "productName": "40 90度 弯头",
+    "type": "设计变更",
+    "status": "已批准",
+    "priority": "高",
+    "requester": "褚永星",
+    "date": "2026-06-01",
+    "description": "壁厚 1.2mm → 1.5mm；原因：提高结构稳定性，降低现场变形风险。"
+  },
+  {
+    "id": "CHANGE-2026-002",
+    "title": "沟槽三通增加气密测试",
+    "productId": "PRD-002",
+    "productName": "DN100xDN50 沟槽机械三通",
+    "type": "检验变更",
+    "status": "审核中",
+    "priority": "中",
+    "requester": "技术质量部",
+    "date": "2026-05-18",
+    "description": "检验规范增加 0.6MPa 气密测试要求，关联客户：海宁水务。"
+  },
+  {
+    "id": "CHANGE-2026-003",
+    "title": "卡箍密封圈宽度验证",
+    "productId": "PRD-001",
+    "productName": "DN65 沟槽卡箍接头",
+    "type": "供应商变更",
+    "status": "已批准",
+    "priority": "中",
+    "requester": "研发/品质",
+    "date": "2026-04-22",
+    "description": "增加新供应商密封圈验证记录，补充现场安装注意事项。"
+  },
+  {
+    "id": "CHANGE-2026-004",
+    "title": "沟槽卡箍螺栓扭矩规范更新",
+    "productId": "PRD-001",
+    "productName": "DN65 沟槽卡箍接头",
+    "type": "工艺变更",
+    "status": "审核中",
+    "priority": "低",
+    "requester": "品质部",
+    "date": "2026-05-10",
+    "description": "拧紧力矩由 50-70Nm 调整为 60-80Nm，配套更新装配作业指导书。"
+  },
+  {
+    "id": "CHANGE-2026-005",
+    "title": "三通密封槽深度调整",
+    "productId": "PRD-002",
+    "productName": "DN100xDN50 沟槽机械三通",
+    "type": "设计变更",
+    "status": "草稿",
+    "priority": "高",
+    "requester": "研发部",
+    "date": "2026-05-28",
+    "description": "DN50 支管密封槽深度由 4.5mm 调整为 5.0mm，提高密封可靠性。"
+  }
+]

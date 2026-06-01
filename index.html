@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FRANTA PDM 产品数据管理平台</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%23006B5A%22/%3E%3Ctext x=%2250%22 y=%2268%22 text-anchor=%22middle%22 font-size=%2250%22 font-weight=%22900%22 fill=%22white%22 font-family=%22system-ui%22%3EF%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+<div class="header-inner">
+  <a class="brand" href="#">
+    <div class="brand-logo">F</div>
+    <div class="brand-text">
+      <h1>FRANTA PDM</h1>
+      <p>产品数据管理平台</p>
+    </div>
+  </a>
+  <div class="search-box">
+    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" id="searchInput" placeholder="搜索产品、图纸、物料..." onkeydown="if(event.key==='Enter')PDM.toast('搜索功能将在下一阶段实现')">
+  </div>
+  <div class="header-actions">
+    <span class="header-badge">&#9679; 静态 MVP</span>
+    <button class="header-btn" onclick="PDM.toast('部署到 Cloudflare Pages 将在后续完成')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      部署
+    </button>
+  </div>
+</div>
+</header>
+
+<!-- Main Content -->
+<div class="main">
+  <div id="view-container">
+    <div class="loading-state">
+      <div class="loading-spinner"></div>
+      <span>正在加载产品数据...</span>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Overlay -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)PDM.closeModal()">
+  <div class="modal" id="modalContent"></div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
