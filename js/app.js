@@ -58,24 +58,23 @@ async function loadProducts() {
 
 // --- Enrich B2B product with PDM-specific fields ---
 function enrichProduct(bp) {
-  // Build rich description from available fields
   const descParts = [];
   if (bp.description) descParts.push(bp.description);
   if (bp.pressure) descParts.push("压力等级: " + bp.pressure);
   if (bp.connection) descParts.push("连接方式: " + bp.connection);
   return {
-    id: bp.id,
-    code: bp.id,
-    name: bp.name,
+    id: bp.id || ("P" + String(allProducts.length + 1).padStart(4, "0")),
+    code: bp.id || bp.code || ("P" + String(allProducts.length + 1).padStart(4, "0")),
+    name: bp.name || "未命名产品",
     category: mapCategory(bp.category, bp.name),
-    spec: bp.size || "",
-    material: bp.material || "",
+    spec: bp.size || bp.spec || "-",
+    material: bp.material || "-",
     pressure: bp.pressure || "",
     connection: bp.connection || "",
-    series: mapSeries(bp.category),
-    version: "V1.0",
-    status: "待发布",
-    owner: "",
+    series: mapSeries(bp.category || ""),
+    version: bp.version || "V1.0",
+    status: bp.status || "已发布",
+    owner: bp.owner || "",
     updatedAt: new Date().toISOString().slice(0, 10),
     description: descParts.join(" | "),
     image: bp.image ? B2B_IMAGE_BASE + bp.image : "",
@@ -113,13 +112,13 @@ function mapSeries(b2bCat) {
   const m = {
     "沟槽管件": "沟槽系统",
     "双卡管件": "双卡压系统",
-    "单卡管件": "环压系统",
+    "单卡管件": "单卡压系统",
     "保温管": "保温管系统",
     "覆塑管": "覆塑管系统",
-    "不锈钢管": "不锈钢管系统",
-    "不锈钢管件": "不锈钢管系统"
+    "不锈钢管": "不锈钢水管",
+    "分水器": "分水器"
   };
-  return m[b2bCat] || b2bCat;
+  return m[b2bCat] || "未分类";
 }
 // --- Sidebar ---
 function renderSidebar() {
@@ -162,8 +161,11 @@ function renderSidebar() {
 function getCategoryTree() {
   const map = {};
   allProducts.forEach(p => {
-    if (!p.category || p.category.length < 1) return;
-    const top = p.category[0];
+    // Safety: ensure category is always an array, never a string
+    if (!p.category) p.category = ["未分类"];
+    if (typeof p.category === "string") p.category = [p.category];
+    if (!Array.isArray(p.category) || p.category.length < 1) p.category = ["未分类"];
+    const top = p.category[0] || "未分类";
     const sub = p.category.length > 1 ? p.category[1] : null;
     if (!map[top]) map[top] = { name: top, children: [] };
     if (sub && !map[top].children.find(x => x === sub)) map[top].children.push(sub);
@@ -173,8 +175,8 @@ function getCategoryTree() {
 
 function countByCategory(top, sub) {
   if (!top) return allProducts.length;
-  if (!sub) return allProducts.filter(p => p.category && p.category[0] === top).length;
-  return allProducts.filter(p => p.category && p.category[0] === top && p.category[1] === sub).length;
+  if (!sub) return allProducts.filter(p => p.category && Array.isArray(p.category) && p.category[0] === top).length;
+  return allProducts.filter(p => p.category && Array.isArray(p.category) && p.category[0] === top && p.category[1] === sub).length;
 }
 
 function applyCategoryFilter(filter) {
@@ -183,7 +185,7 @@ function applyCategoryFilter(filter) {
   } else {
     const parts = filter.split("|");
     filteredProducts = allProducts.filter(p => {
-      if (!p.category) return false;
+      if (!p.category || !Array.isArray(p.category)) return false;
       if (parts.length === 1) return p.category[0] === parts[0];
       return p.category[0] === parts[0] && p.category[1] === parts[1];
     });

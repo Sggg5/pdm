@@ -1,0 +1,1138 @@
+[
+  {
+    "productId": "FR-001",
+    "id": "FR-001-PDF",
+    "name": "沟槽式异径对接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-001",
+    "id": "FR-001-CAD",
+    "name": "沟槽式异径对接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-002",
+    "id": "FR-002-PDF",
+    "name": "沟槽式45°弯头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-002",
+    "id": "FR-002-CAD",
+    "name": "沟槽式45°弯头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-003",
+    "id": "FR-003-PDF",
+    "name": "沟槽式90°弯头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-003",
+    "id": "FR-003-CAD",
+    "name": "沟槽式90°弯头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-004",
+    "id": "FR-004-PDF",
+    "name": "沟槽式等径三通 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-004",
+    "id": "FR-004-CAD",
+    "name": "沟槽式等径三通 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-005",
+    "id": "FR-005-PDF",
+    "name": "沟槽式异径三通 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-005",
+    "id": "FR-005-CAD",
+    "name": "沟槽式异径三通 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-006",
+    "id": "FR-006-PDF",
+    "name": "沟槽式等径四通 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-006",
+    "id": "FR-006-CAD",
+    "name": "沟槽式等径四通 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-007",
+    "id": "FR-007-PDF",
+    "name": "沟槽式异径四通 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-007",
+    "id": "FR-007-CAD",
+    "name": "沟槽式异径四通 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-008",
+    "id": "FR-008-PDF",
+    "name": "沟槽式法兰转换接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-008",
+    "id": "FR-008-CAD",
+    "name": "沟槽式法兰转换接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-009",
+    "id": "FR-009-PDF",
+    "name": "沟槽卡压式异径对接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-009",
+    "id": "FR-009-CAD",
+    "name": "沟槽卡压式异径对接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-010",
+    "id": "FR-010-PDF",
+    "name": "沟槽卡压式异径三通 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-010",
+    "id": "FR-010-CAD",
+    "name": "沟槽卡压式异径三通 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-011",
+    "id": "FR-011-PDF",
+    "name": "沟槽卡压式异径四通 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-011",
+    "id": "FR-011-CAD",
+    "name": "沟槽卡压式异径四通 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-012",
+    "id": "FR-012-PDF",
+    "name": "沟槽式卡箍接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-012",
+    "id": "FR-012-CAD",
+    "name": "沟槽式卡箍接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-013",
+    "id": "FR-013-PDF",
+    "name": "双卡压式等径对接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-013",
+    "id": "FR-013-CAD",
+    "name": "双卡压式等径对接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-014",
+    "id": "FR-014-PDF",
+    "name": "双卡压式异径对接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-014",
+    "id": "FR-014-CAD",
+    "name": "双卡压式异径对接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-015",
+    "id": "FR-015-PDF",
+    "name": "双卡压式内螺纹转换接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-015",
+    "id": "FR-015-CAD",
+    "name": "双卡压式内螺纹转换接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-016",
+    "id": "FR-016-PDF",
+    "name": "双卡压式外螺纹转换接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-016",
+    "id": "FR-016-CAD",
+    "name": "双卡压式外螺纹转换接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-017",
+    "id": "FR-017-PDF",
+    "name": "双卡压式螺母移动转换接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-017",
+    "id": "FR-017-CAD",
+    "name": "双卡压式螺母移动转换接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-018",
+    "id": "FR-018-PDF",
+    "name": "双卡压式内螺纹90°转换弯头（短型） 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-018",
+    "id": "FR-018-CAD",
+    "name": "双卡压式内螺纹90°转换弯头（短型） CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-019",
+    "id": "FR-019-PDF",
+    "name": "双卡压式A型90°弯头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-019",
+    "id": "FR-019-CAD",
+    "name": "双卡压式A型90°弯头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-020",
+    "id": "FR-020-PDF",
+    "name": "双卡压式异径90°弯头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-020",
+    "id": "FR-020-CAD",
+    "name": "双卡压式异径90°弯头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-021",
+    "id": "FR-021-PDF",
+    "name": "双卡压式外螺纹90°转换弯头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-021",
+    "id": "FR-021-CAD",
+    "name": "双卡压式外螺纹90°转换弯头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-022",
+    "id": "FR-022-PDF",
+    "name": "双卡压式内螺纹90°转换弯头（长型） 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-022",
+    "id": "FR-022-CAD",
+    "name": "双卡压式内螺纹90°转换弯头（长型） CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-023",
+    "id": "FR-023-PDF",
+    "name": "双卡压式90°移动螺母转换接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-023",
+    "id": "FR-023-CAD",
+    "name": "双卡压式90°移动螺母转换接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-024",
+    "id": "FR-024-PDF",
+    "name": "双卡压式B型90°弯头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-024",
+    "id": "FR-024-CAD",
+    "name": "双卡压式B型90°弯头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-025",
+    "id": "FR-025-PDF",
+    "name": "双卡压式A型45°弯头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-025",
+    "id": "FR-025-CAD",
+    "name": "双卡压式A型45°弯头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-026",
+    "id": "FR-026-PDF",
+    "name": "双卡压式B型45°弯头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-026",
+    "id": "FR-026-CAD",
+    "name": "双卡压式B型45°弯头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-027",
+    "id": "FR-027-PDF",
+    "name": "双卡压式异径45°弯头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-027",
+    "id": "FR-027-CAD",
+    "name": "双卡压式异径45°弯头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-028",
+    "id": "FR-028-PDF",
+    "name": "双卡压式等径三通接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-028",
+    "id": "FR-028-CAD",
+    "name": "双卡压式等径三通接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-029",
+    "id": "FR-029-PDF",
+    "name": "双卡压式异径三通接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-029",
+    "id": "FR-029-CAD",
+    "name": "双卡压式异径三通接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-030",
+    "id": "FR-030-PDF",
+    "name": "双卡压式外螺纹三通转换接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-030",
+    "id": "FR-030-CAD",
+    "name": "双卡压式外螺纹三通转换接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-031",
+    "id": "FR-031-PDF",
+    "name": "双卡压式内螺纹三通转换接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-031",
+    "id": "FR-031-CAD",
+    "name": "双卡压式内螺纹三通转换接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-032",
+    "id": "FR-032-PDF",
+    "name": "双卡压式等径四通接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-032",
+    "id": "FR-032-CAD",
+    "name": "双卡压式等径四通接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-033",
+    "id": "FR-033-PDF",
+    "name": "双卡压式异径四通接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-033",
+    "id": "FR-033-CAD",
+    "name": "双卡压式异径四通接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-034",
+    "id": "FR-034-PDF",
+    "name": "双卡压式承口式法兰转换接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-034",
+    "id": "FR-034-CAD",
+    "name": "双卡压式承口式法兰转换接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-035",
+    "id": "FR-035-PDF",
+    "name": "双卡压式可调对接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-035",
+    "id": "FR-035-CAD",
+    "name": "双卡压式可调对接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-036",
+    "id": "FR-036-PDF",
+    "name": "双卡压式管帽 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-036",
+    "id": "FR-036-CAD",
+    "name": "双卡压式管帽 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-037",
+    "id": "FR-037-PDF",
+    "name": "双卡压式凸面板式平焊法兰 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-037",
+    "id": "FR-037-CAD",
+    "name": "双卡压式凸面板式平焊法兰 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-038",
+    "id": "FR-038-PDF",
+    "name": "双卡压式直管式法兰转换接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-038",
+    "id": "FR-038-CAD",
+    "name": "双卡压式直管式法兰转换接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-039",
+    "id": "FR-039-PDF",
+    "name": "双卡压式管桥 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-039",
+    "id": "FR-039-CAD",
+    "name": "双卡压式管桥 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-040",
+    "id": "FR-040-PDF",
+    "name": "双卡压式双外螺纹接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-040",
+    "id": "FR-040-CAD",
+    "name": "双卡压式双外螺纹接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-041",
+    "id": "FR-041-PDF",
+    "name": "单卡压式等径对接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-041",
+    "id": "FR-041-CAD",
+    "name": "单卡压式等径对接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-042",
+    "id": "FR-042-PDF",
+    "name": "单卡压式异径对接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-042",
+    "id": "FR-042-CAD",
+    "name": "单卡压式异径对接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-043",
+    "id": "FR-043-PDF",
+    "name": "单卡压式内螺纹转换接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-043",
+    "id": "FR-043-CAD",
+    "name": "单卡压式内螺纹转换接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-044",
+    "id": "FR-044-PDF",
+    "name": "单卡压式外螺纹转换接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-044",
+    "id": "FR-044-CAD",
+    "name": "单卡压式外螺纹转换接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-045",
+    "id": "FR-045-PDF",
+    "name": "单卡压式螺母移动转换接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-045",
+    "id": "FR-045-CAD",
+    "name": "单卡压式螺母移动转换接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-046",
+    "id": "FR-046-PDF",
+    "name": "单卡压式内螺纹90°转换弯头（短型） 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-046",
+    "id": "FR-046-CAD",
+    "name": "单卡压式内螺纹90°转换弯头（短型） CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-047",
+    "id": "FR-047-PDF",
+    "name": "单卡压式A型90°弯头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-047",
+    "id": "FR-047-CAD",
+    "name": "单卡压式A型90°弯头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-048",
+    "id": "FR-048-PDF",
+    "name": "单卡压式异径90°弯头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-048",
+    "id": "FR-048-CAD",
+    "name": "单卡压式异径90°弯头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-049",
+    "id": "FR-049-PDF",
+    "name": "单卡压式外螺纹90°转换弯头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-049",
+    "id": "FR-049-CAD",
+    "name": "单卡压式外螺纹90°转换弯头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-050",
+    "id": "FR-050-PDF",
+    "name": "单卡压式内螺纹90°转换弯头（长型） 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-050",
+    "id": "FR-050-CAD",
+    "name": "单卡压式内螺纹90°转换弯头（长型） CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-051",
+    "id": "FR-051-PDF",
+    "name": "单卡压式90°移动螺母转换接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-051",
+    "id": "FR-051-CAD",
+    "name": "单卡压式90°移动螺母转换接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-052",
+    "id": "FR-052-PDF",
+    "name": "单卡压式B型90°弯头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-052",
+    "id": "FR-052-CAD",
+    "name": "单卡压式B型90°弯头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-053",
+    "id": "FR-053-PDF",
+    "name": "单卡压式A型45°弯头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-053",
+    "id": "FR-053-CAD",
+    "name": "单卡压式A型45°弯头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-054",
+    "id": "FR-054-PDF",
+    "name": "单卡压式B型45°弯头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-054",
+    "id": "FR-054-CAD",
+    "name": "单卡压式B型45°弯头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-055",
+    "id": "FR-055-PDF",
+    "name": "单卡压式异径45°弯头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-055",
+    "id": "FR-055-CAD",
+    "name": "单卡压式异径45°弯头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-056",
+    "id": "FR-056-PDF",
+    "name": "单卡压式等径三通接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-056",
+    "id": "FR-056-CAD",
+    "name": "单卡压式等径三通接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-057",
+    "id": "FR-057-PDF",
+    "name": "单卡压式异径三通接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-057",
+    "id": "FR-057-CAD",
+    "name": "单卡压式异径三通接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-058",
+    "id": "FR-058-PDF",
+    "name": "单卡压式外螺纹三通转换接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-058",
+    "id": "FR-058-CAD",
+    "name": "单卡压式外螺纹三通转换接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-059",
+    "id": "FR-059-PDF",
+    "name": "单卡压式内螺纹三通转换接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-059",
+    "id": "FR-059-CAD",
+    "name": "单卡压式内螺纹三通转换接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-060",
+    "id": "FR-060-PDF",
+    "name": "单卡压式等径四通接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-060",
+    "id": "FR-060-CAD",
+    "name": "单卡压式等径四通接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-061",
+    "id": "FR-061-PDF",
+    "name": "单卡压式异径四通接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-061",
+    "id": "FR-061-CAD",
+    "name": "单卡压式异径四通接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-062",
+    "id": "FR-062-PDF",
+    "name": "单卡压式承口式法兰转换接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-062",
+    "id": "FR-062-CAD",
+    "name": "单卡压式承口式法兰转换接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-063",
+    "id": "FR-063-PDF",
+    "name": "单卡压式可调对接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-063",
+    "id": "FR-063-CAD",
+    "name": "单卡压式可调对接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-064",
+    "id": "FR-064-PDF",
+    "name": "单卡压式管帽 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-064",
+    "id": "FR-064-CAD",
+    "name": "单卡压式管帽 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-065",
+    "id": "FR-065-PDF",
+    "name": "单卡压式凸面板式平焊法兰 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-065",
+    "id": "FR-065-CAD",
+    "name": "单卡压式凸面板式平焊法兰 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-066",
+    "id": "FR-066-PDF",
+    "name": "单卡压式直管式法兰转换接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-066",
+    "id": "FR-066-CAD",
+    "name": "单卡压式直管式法兰转换接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-067",
+    "id": "FR-067-PDF",
+    "name": "单卡压式管桥 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-067",
+    "id": "FR-067-CAD",
+    "name": "单卡压式管桥 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-068",
+    "id": "FR-068-PDF",
+    "name": "单卡压式双外螺纹接头 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-068",
+    "id": "FR-068-CAD",
+    "name": "单卡压式双外螺纹接头 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-069",
+    "id": "FR-069-PDF",
+    "name": "不锈钢水管 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-069",
+    "id": "FR-069-CAD",
+    "name": "不锈钢水管 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-070",
+    "id": "FR-070-PDF",
+    "name": "不锈钢保温管 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-070",
+    "id": "FR-070-CAD",
+    "name": "不锈钢保温管 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-071",
+    "id": "FR-071-PDF",
+    "name": "不锈钢覆塑管 产品样本",
+    "type": "pdf",
+    "file": "待上传",
+    "status": "待上传"
+  },
+  {
+    "productId": "FR-071",
+    "id": "FR-071-CAD",
+    "name": "不锈钢覆塑管 CAD图纸",
+    "type": "dwg",
+    "file": "待上传",
+    "status": "待上传"
+  }
+]
