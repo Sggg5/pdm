@@ -2,7 +2,7 @@
   {
     "id": "ECN-2026-001",
     "title": "弯头壁厚调整",
-    "productId": "PRD-003",
+    "productId": "FR-003",
     "productName": "沟槽式90°弯头",
     "type": "设计变更",
     "status": "已批准",
@@ -30,7 +30,7 @@
   {
     "id": "ECN-2026-002",
     "title": "三通增加气密测试要求",
-    "productId": "PRD-002",
+    "productId": "FR-004",
     "productName": "沟槽式等径三通",
     "type": "检验变更",
     "status": "审核中",
@@ -56,7 +56,7 @@
   {
     "id": "ECN-2026-003",
     "title": "卡箍密封圈供应商变更验证",
-    "productId": "PRD-001",
+    "productId": "FR-012",
     "productName": "沟槽式卡箍接头",
     "type": "供应商变更",
     "status": "已批准",
@@ -84,7 +84,7 @@
   {
     "id": "ECN-2026-004",
     "title": "卡箍螺栓扭矩规范更新",
-    "productId": "PRD-001",
+    "productId": "FR-012",
     "productName": "沟槽式卡箍接头",
     "type": "工艺变更",
     "status": "审核中",
@@ -109,7 +109,7 @@
   {
     "id": "ECN-2026-005",
     "title": "三通密封槽深度调整",
-    "productId": "PRD-002",
+    "productId": "FR-004",
     "productName": "沟槽式等径三通",
     "type": "设计变更",
     "status": "草稿",
@@ -135,8 +135,8 @@
   {
     "id": "ECN-2026-006",
     "title": "法兰新增检验规范",
-    "productId": "PRD-004",
-    "productName": "沟槽式法兰",
+    "productId": "FR-008",
+    "productName": "沟槽式法兰转换接头",
     "type": "新增文件",
     "status": "审核中",
     "priority": "中",

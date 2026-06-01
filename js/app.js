@@ -1,5 +1,5 @@
 // FRANTA PDM v2 - Product Data Management
-// Static MVP - no backend, no database, no login
+// Auto-generated from B2B product data
 
 let allProducts = [];
 let allChanges = [];
@@ -157,7 +157,7 @@ function renderHome() {
     </div>
     <div class="section-head"><h3>最近变更记录</h3></div>
     <div class="panel"><div class="timeline">${renderChangeTimeline()}</div></div>
-    <div class="footer">FRANTA PDM v2.0 · 产品数据管理平台 · 数据本地存储 · 无后端依赖</div>
+    <div class="footer">FRANTA PDM v2.1 \u00b7 产品数据管理平台 \u00b7 数据自动同步自 B2B</div>
   `;
 }
 
@@ -177,13 +177,13 @@ function calcStats(products) {
 
 function renderModules() {
   const mods = [
-    { icon: "📦", name: "产品库", count: allProducts.length },
-    { icon: "📐", name: "图纸库", count: allProducts.reduce((a,p) => a + (p.drawings?p.drawings.length:0), 0) },
-    { icon: "📋", name: "BOM", count: allProducts.reduce((a,p) => a + (p.bom?p.bom.length:0), 0) },
-    { icon: "⚙", name: "工艺路线", count: allProducts.reduce((a,p) => a + (p.routings?p.routings.length:0), 0) },
-    { icon: "📄", name: "SOP", count: allProducts.reduce((a,p) => a + (p.sops?p.sops.length:0), 0) },
-    { icon: "🔍", name: "检验规范", count: allProducts.reduce((a,p) => a + (p.inspection?p.inspection.length:0), 0) },
-    { icon: "🔄", name: "变更记录", count: allChanges.length }
+    { icon: "\ud83d\udce6", name: "产品库", count: allProducts.length },
+    { icon: "\ud83d\udcd0", name: "图纸库", count: allProducts.reduce((a,p) => a + (p.drawings?p.drawings.length:0), 0) },"
+    { icon: "\ud83d\udccb", name: "BOM", count: allProducts.reduce((a,p) => a + (p.bom?p.bom.length:0), 0) },"
+    { icon: "\u2699\ufe0f", name: "工艺路线", count: allProducts.reduce((a,p) => a + (p.routings?p.routings.length:0), 0) },"
+    { icon: "\ud83d\udcc4", name: "SOP", count: allProducts.reduce((a,p) => a + (p.sops?p.sops.length:0), 0) },"
+    { icon: "\ud83d\udd0d", name: "检验规范", count: allProducts.reduce((a,p) => a + (p.inspection?p.inspection.length:0), 0) },"
+    { icon: "\ud83d\udd04", name: "变更记录", count: allChanges.length }
   ];
   return mods.map(m => `
     <div class="module-card" onclick="scrollToSection('${m.name}')">
@@ -198,15 +198,23 @@ function renderProductRows(products) {
   if (!products.length) return `<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--muted)">没有匹配的产品</td></tr>`;
   return products.map(p => `
     <tr onclick="showProduct('${p.id}')" style="cursor:pointer">
-      <td><img class="prod-img" src="${p.image || "https://placehold.co/42x42/e0f2f1/00796B?text=P"}" alt="${p.name}" onerror="this.src='https://placehold.co/42x42/e0f2f1/00796B?text=P'"></td>
+      <td><img class="prod-img" src="${p.image || ""}" alt="${p.name}" onerror="this.onerror=null;this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2242%22 height=%2242%22><rect fill=%22%23e0f2f1%22 width=%2242%22 height=%2242%22/><text fill=%22%2300796B%22 x=%2221%22 y=%2226%22 font-size=%2216%22 text-anchor=%22middle%22 font-family=%22sans-serif%22>P</text></svg>'"></td>
       <td><strong>${p.name}</strong></td>
       <td style="font-family:var(--font-mono);font-size:12px">${p.code || "-"}</td>
       <td>${p.spec || "-"}</td>
       <td>${p.material || "-"}</td>
-      <td><span class="soStatus"><span class="status-dot ${p.status==="已发布"?"dot-green":"dot-orange"}"></span>${p.status}</span></td>
+      <td><span class="soStatus"><span class="status-dot ${getStatusDot(p.status)}"></span>${p.status}</span></td>
       <td>${p.version || "V1.0"}</td>
     </tr>
   `).join("");
+}
+
+function getStatusDot(status) {
+  if (status === "已发布") return "dot-green";
+  if (status === "审核中") return "dot-orange";
+  if (status === "试制") return "dot-orange";
+  if (status === "待发布") return "dot-blue";
+  return "dot-gray";
 }
 
 function renderChangeTimeline() {
@@ -217,7 +225,7 @@ function renderChangeTimeline() {
     return `
       <div class="change-item" onclick="showECN('${c.id}')">
         <div class="change-title">${c.title} <span class="badge ${badgeClass}">${c.status}</span></div>
-        <div class="change-meta">${c.id} · ${c.productName} · ${c.requester} · ${c.date}</div>
+        <div class="change-meta">${c.id} \u00b7 ${c.productName} \u00b7 ${c.requester} \u00b7 ${c.date}</div>
         <div class="change-desc">${c.description}</div>
       </div>
     `;
@@ -237,7 +245,7 @@ function showProduct(id) {
       返回产品列表
     </div>
     <div class="prod-header">
-      <img class="prod-header-img" src="${p.image || "https://placehold.co/88x88/e0f2f1/00796B?text=P"}" alt="${p.name}" onerror="this.src='https://placehold.co/88x88/e0f2f1/00796B?text=P'">
+      <img class="prod-header-img" src="${p.image || ""}" alt="${p.name}" onerror="this.onerror=null;this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2288%22 height=%2288%22><rect fill=%22%23e0f2f1%22 width=%2288%22 height=%2288%22/><text fill=%22%2300796B%22 x=%2244%22 y=%2250%22 font-size=%2232%22 text-anchor=%22middle%22 font-family=%22sans-serif%22>P</text></svg>'">
       <div class="prod-header-info">
         <h2>${p.name}</h2>
         <div class="codes">
@@ -253,7 +261,7 @@ function showProduct(id) {
       <div class="prod-meta-item"><strong>材质</strong><span>${p.material || "-"}</span></div>
       <div class="prod-meta-item"><strong>产品系列</strong><span>${p.series || "-"}</span></div>
       <div class="prod-meta-item"><strong>当前版本</strong><span>${p.version || "V1.0"}</span></div>
-      <div class="prod-meta-item"><strong>发布状态</strong><span class="soStatus"><span class="status-dot ${p.status==="已发布"?"dot-green":"dot-orange"}"></span>${p.status}</span></div>
+      <div class="prod-meta-item"><strong>发布状态</strong><span class="soStatus"><span class="status-dot ${getStatusDot(p.status)}"></span>${p.status}</span></div>
       <div class="prod-meta-item"><strong>责任人</strong><span>${p.owner || "-"}</span></div>
       <div class="prod-meta-item"><strong>更新日期</strong><span>${p.updatedAt || "-"}</span></div>
       <div class="prod-meta-item"><strong>产品编码</strong><span style="font-family:var(--font-mono)">${p.code || "-"}</span></div>
@@ -262,72 +270,89 @@ function showProduct(id) {
   `;
 }
 
+// --- Section renderer with empty-state placeholders ---
 function renderSections(p) {
   let html = "";
   // Drawings
+  html += `<div class="section-head" id="图纸库"><h3>图纸文件</h3></div>`;
   if (p.drawings && p.drawings.length) {
-    html += `<div class="section-head" id="图纸库"><h3>图纸文件 (${p.drawings.length})</h3></div>
-      <div class="draw-grid">${p.drawings.map(d => `
+    html += `<div class="draw-grid">${p.drawings.map(d => `
         <div class="draw-card">
           <span class="draw-icon">${getDrawIcon(d.type)}</span>
           <div class="name">${d.name}</div>
-          <div class="meta">${d.file} · ${d.size || ""}</div>
+          <div class="meta">${d.file} \u00b7 ${d.size || ""}</div>
           <div class="draw-actions">
             <button class="draw-btn primary" onclick="showToast('在线预览: ${d.file}', 'info')">在线预览</button>
             <button class="draw-btn" onclick="showToast('下载文件: ${d.file}', 'info')">下载文件</button>
           </div>
         </div>
       `).join("")}</div>`;
+  } else {
+    html += `<div class="empty-section"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><p>暂未上传图纸文件</p></div>`;
   }
   // BOM
+  html += `<div class="section-head" id="BOM"><h3>BOM 清单</h3></div>`;
   if (p.bom && p.bom.length) {
-    html += `<div class="section-head" id="BOM"><h3>BOM 清单 (${p.bom.length})</h3></div>
-      <div class="panel"><table class="data-table">
+    html += `<div class="panel"><table class="data-table">
         <thead><tr><th>层级</th><th>图号</th><th>名称</th><th>数量</th><th>单位</th><th>类型</th><th>来源</th></tr></thead>
         <tbody>${p.bom.map(b => `
           <tr><td>${"  ".repeat(b.level)}Lv.${b.level}</td><td style="font-family:var(--font-mono);font-size:12px">${b.part}</td><td>${b.name}</td><td>${b.qty}</td><td>${b.unit}</td><td>${b.type}</td><td>${b.source}</td></tr>
-        `).join("")}</tbody></table></div>`;
+        `).join("")}</tbody></table></div>\`;
+  } else {
+    html += `<div class="empty-section"><p>暂未建立 BOM 清单</p></div>`;
   }
   // Routings
+  html += `<div class="section-head" id="工艺路线"><h3>工艺路线</h3></div>`;
   if (p.routings && p.routings.length) {
-    html += `<div class="section-head" id="工艺路线"><h3>工艺路线 (${p.routings.length})</h3></div>
-      <div class="panel"><table class="data-table">
+    html += `<div class="panel"><table class="data-table">
         <thead><tr><th>工序</th><th>名称</th><th>部门</th><th>设备</th><th>工时</th><th>关键要求</th></tr></thead>
         <tbody>${p.routings.map(r => `
           <tr><td>${r.seq}</td><td>${r.name}</td><td>${r.dept}</td><td>${r.machine}</td><td>${r.time}</td><td>${r.keyReq || ""}</td></tr>
-        `).join("")}</tbody></table></div>`;
+        `).join("")}</tbody></table></div>\`;
+  } else {
+    html += `<div class="empty-section"><p>暂未录入工艺路线</p></div>`;
   }
   // SOPs
+  html += `<div class="section-head" id="SOP"><h3>SOP 文件</h3></div>`;
   if (p.sops && p.sops.length) {
-    html += `<div class="section-head" id="SOP"><h3>SOP 文件 (${p.sops.length})</h3></div>
-      <div class="panel"><table class="data-table">
+    html += `<div class="panel"><table class="data-table">
         <thead><tr><th>编号</th><th>名称</th><th>分类</th></tr></thead>
         <tbody>${p.sops.map(s => `
           <tr><td style="font-family:var(--font-mono);font-size:12px">${s.code}</td><td>${s.name}</td><td>${s.category}</td></tr>
-        `).join("")}</tbody></table></div>`;
+        `).join("")}</tbody></table></div>\`;
+  } else {
+    html += `<div class="empty-section"><p>暂未上传 SOP 文件</p></div>`;
   }
   // Inspection
+  html += `<div class="section-head" id="检验规范"><h3>检验规范</h3></div>`;
   if (p.inspection && p.inspection.length) {
-    html += `<div class="section-head" id="检验规范"><h3>检验规范 (${p.inspection.length})</h3></div>
-      <div class="panel"><table class="data-table">
+    html += `<div class="panel"><table class="data-table">
         <thead><tr><th>检验项目</th><th>标准</th><th>方法</th><th>结果</th><th>实测值</th></tr></thead>
         <tbody>${p.inspection.map(i => {
           const dot = i.result === "pass" ? "dot-green" : i.result === "fail" ? "dot-orange" : "dot-gray";
           return `<tr><td>${i.name}</td><td>${i.spec}</td><td>${i.method}</td><td><span class="soStatus"><span class="status-dot ${dot}"></span>${i.result}</span></td><td>${i.measured}</td></tr>`;
-        }).join("")}</tbody></table></div>`;
+        }).join("")}</tbody></table></div>\`;
+  } else {
+    html += `<div class="empty-section"><p>暂未建立检验规范</p></div>`;
   }
   // Related ECN changes
+  html += `<div class="section-head" id="变更记录"><h3>关联变更记录</h3></div>`;
   if (p.changes && p.changes.length) {
     const related = allChanges.filter(c => p.changes.includes(c.id));
-    html += `<div class="section-head" id="变更记录"><h3>关联变更记录 (${related.length})</h3></div>
-      <div class="panel"><div class="timeline">${related.map(c => {
+    if (related.length) {
+      html += `<div class="panel"><div class="timeline">${related.map(c => {
         const badgeClass = c.status === "已批准" ? "badge-green" : c.status === "草稿" ? "badge-gray" : "badge-orange";
         return `<div class="change-item" onclick="showECN('${c.id}')">
           <div class="change-title">${c.title} <span class="badge ${badgeClass}">${c.status}</span></div>
-          <div class="change-meta">${c.id} · ${c.type} · ${c.requester} · ${c.date}</div>
+          <div class="change-meta">${c.id} \u00b7 ${c.type} \u00b7 ${c.requester} \u00b7 ${c.date}</div>
           <div class="change-desc">${c.description}</div>
         </div>`;
-      }).join("")}</div></div>`;
+      }).join("")}</div></div>\`;
+    } else {
+      html += `<div class="empty-section"><p>暂无关联变更记录</p></div>`;
+    }
+  } else {
+    html += `<div class="empty-section"><p>暂无关联变更记录</p></div>`;
   }
   return html;
 }
@@ -350,7 +375,7 @@ function showECN(id) {
   body.innerHTML = `
     <div class="ecn-header">
       <h2>${c.title} <span class="badge ${badgeClass}">${c.status}</span></h2>
-      <div class="sub">${c.id} · ${c.productName} · ${c.type}</div>
+      <div class="sub">${c.id} \u00b7 ${c.productName} \u00b7 ${c.type}</div>
     </div>
     <div class="ecn-meta-grid">
       <div class="ecn-meta-item"><strong>产品</strong><span>${c.productName}</span></div>
@@ -445,11 +470,11 @@ function renderChanges() {
       const badgeClass = c.status === "已批准" ? "badge-green" : c.status === "草稿" ? "badge-gray" : "badge-orange";
       return `<div class="change-item" onclick="showECN('${c.id}')">
         <div class="change-title">${c.title} <span class="badge ${badgeClass}">${c.status}</span></div>
-        <div class="change-meta">${c.id} · ${c.productName} · ${c.type} · ${c.requester} · ${c.date}</div>
+        <div class="change-meta">${c.id} \u00b7 ${c.productName} \u00b7 ${c.type} \u00b7 ${c.requester} \u00b7 ${c.date}</div>
         <div class="change-desc">${c.description}</div>
       </div>`;
     }).join("")}</div></div>
-    <div class="footer">FRANTA PDM v2.0 · 产品数据管理平台</div>
+    <div class="footer">FRANTA PDM v2.1 \u00b7 产品数据管理平台</div>
   `;
 }
 

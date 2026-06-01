@@ -1,939 +1,1647 @@
 [
   {
-    "id": "PRD-001",
-    "name": "沟槽式卡箍接头",
-    "code": "FR-CP-65-304",
+    "id": "FR-001",
+    "code": "FR-001",
+    "name": "沟槽式异径对接头",
     "category": [
       "沟槽系统",
-      "卡箍"
+      "管件"
     ],
-    "spec": "DN65",
-    "material": "SUS304 不锈钢",
-    "series": "沟槽系列",
-    "version": "V1.8",
-    "status": "已发布",
-    "owner": "褚永星",
-    "updatedAt": "2026-05-20",
-    "description": "DN65 沟槽式卡箍连接件，用于消防/给水管道系统。采用 304 不锈钢精密铸造工艺，EPDM 密封圈，适用于 PN16 压力等级。安装便捷，无需焊接，仅需拧紧螺栓即可完成管道连接。",
-    "image": "images/grooved-clamp-coupling.png",
-    "drawings": [
-      {
-        "id": "DRW-001",
-        "name": "卡箍装配图 (DWG)",
-        "file": "CP65-Assembly.dwg",
-        "type": "dwg",
-        "size": "1.2 MB"
-      },
-      {
-        "id": "DRW-002",
-        "name": "卡箍本体-左 (DWG)",
-        "file": "CP65-Body-L.dwg",
-        "type": "dwg",
-        "size": "0.8 MB"
-      },
-      {
-        "id": "DRW-003",
-        "name": "卡箍本体-右 (DWG)",
-        "file": "CP65-Body-R.dwg",
-        "type": "dwg",
-        "size": "0.8 MB"
-      },
-      {
-        "id": "DRW-004",
-        "name": "密封圈详图 (PDF)",
-        "file": "CP65-Seal.pdf",
-        "type": "pdf",
-        "size": "0.3 MB"
-      },
-      {
-        "id": "DRW-005",
-        "name": "装配三维模型 (STEP)",
-        "file": "CP65-Assembly.stp",
-        "type": "stp",
-        "size": "4.5 MB"
-      },
-      {
-        "id": "DRW-006",
-        "name": "卡箍加工图 (DXF)",
-        "file": "CP65-Machining.dxf",
-        "type": "dxf",
-        "size": "0.6 MB"
-      }
-    ],
-    "bom": [
-      {
-        "level": 0,
-        "part": "CP-65-00",
-        "name": "沟槽卡箍总成",
-        "qty": 1,
-        "unit": "套",
-        "type": "装配件",
-        "source": "自制"
-      },
-      {
-        "level": 1,
-        "part": "CP-65-01",
-        "name": "卡箍本体(左)",
-        "qty": 1,
-        "unit": "件",
-        "type": "铸造件",
-        "source": "自制",
-        "material": "SUS304"
-      },
-      {
-        "level": 1,
-        "part": "CP-65-02",
-        "name": "卡箍本体(右)",
-        "qty": 1,
-        "unit": "件",
-        "type": "铸造件",
-        "source": "自制",
-        "material": "SUS304"
-      },
-      {
-        "level": 1,
-        "part": "CP-65-03",
-        "name": "密封圈 EPDM",
-        "qty": 1,
-        "unit": "件",
-        "type": "橡胶件",
-        "source": "外购",
-        "material": "EPDM"
-      },
-      {
-        "level": 1,
-        "part": "CP-65-04",
-        "name": "螺栓 M16x60",
-        "qty": 2,
-        "unit": "件",
-        "type": "标准件",
-        "source": "外购",
-        "material": "SUS304"
-      },
-      {
-        "level": 1,
-        "part": "CP-65-05",
-        "name": "螺母 M16",
-        "qty": 2,
-        "unit": "件",
-        "type": "标准件",
-        "source": "外购",
-        "material": "SUS304"
-      },
-      {
-        "level": 1,
-        "part": "CP-65-06",
-        "name": "平垫圈 M16",
-        "qty": 2,
-        "unit": "件",
-        "type": "标准件",
-        "source": "外购",
-        "material": "SUS304"
-      }
-    ],
-    "routings": [
-      {
-        "seq": 10,
-        "name": "精密铸造",
-        "dept": "铸造车间",
-        "machine": "中频熔炼炉",
-        "time": "120 min",
-        "keyReq": "CT7 精度"
-      },
-      {
-        "seq": 20,
-        "name": "铸件清理",
-        "dept": "铸造车间",
-        "machine": "抛丸机",
-        "time": "20 min",
-        "keyReq": "去除浇口飞边"
-      },
-      {
-        "seq": 30,
-        "name": "固溶热处理",
-        "dept": "热处理",
-        "machine": "固溶炉",
-        "time": "90 min",
-        "keyReq": "1050°C x 1h"
-      },
-      {
-        "seq": 40,
-        "name": "机加工",
-        "dept": "机加工",
-        "machine": "CNC 加工中心",
-        "time": "45 min",
-        "keyReq": "沟槽深度 8.5±0.2"
-      },
-      {
-        "seq": 50,
-        "name": "密封圈装配",
-        "dept": "装配",
-        "machine": "手工",
-        "time": "15 min",
-        "keyReq": "无扭曲、位置正确"
-      },
-      {
-        "seq": 60,
-        "name": "打压测试",
-        "dept": "品质部",
-        "machine": "打压测试台",
-        "time": "20 min",
-        "keyReq": "1.2MPa 保压 3min"
-      },
-      {
-        "seq": 70,
-        "name": "钝化处理",
-        "dept": "表面处理",
-        "machine": "钝化线",
-        "time": "30 min",
-        "keyReq": "表面均匀"
-      },
-      {
-        "seq": 80,
-        "name": "全检包装",
-        "dept": "品质部",
-        "machine": "自动检测线",
-        "time": "25 min",
-        "keyReq": "外观尺寸全检"
-      }
-    ],
-    "sops": [
-      {
-        "code": "SOP-CAST-001",
-        "name": "精密铸造作业指导书",
-        "category": "铸造"
-      },
-      {
-        "code": "SOP-WELD-001",
-        "name": "卡箍焊接作业指导书",
-        "category": "焊接"
-      },
-      {
-        "code": "SOP-SEAL-002",
-        "name": "密封圈装配作业要求",
-        "category": "装配"
-      },
-      {
-        "code": "SOP-MACH-003",
-        "name": "卡箍机加工操作标准",
-        "category": "机加工"
-      },
-      {
-        "code": "QC-CP-065",
-        "name": "卡箍检验规范",
-        "category": "检验"
-      }
-    ],
-    "inspection": [
-      {
-        "name": "内径尺寸",
-        "spec": "DN65 H9",
-        "method": "内径千分尺",
-        "result": "pass",
-        "measured": "65.012"
-      },
-      {
-        "name": "沟槽深度",
-        "spec": "8.5±0.2mm",
-        "method": "深度卡尺",
-        "result": "pass",
-        "measured": "8.52"
-      },
-      {
-        "name": "密封槽宽度",
-        "spec": "6.0±0.1mm",
-        "method": "卡尺",
-        "result": "pass",
-        "measured": "6.03"
-      },
-      {
-        "name": "本体硬度",
-        "spec": "HB≥180",
-        "method": "布氏硬度计",
-        "result": "pass",
-        "measured": "195"
-      },
-      {
-        "name": "密封测试",
-        "spec": "1.2MPa 保压 3min",
-        "method": "气密测试台",
-        "result": "pass",
-        "measured": "无泄漏"
-      },
-      {
-        "name": "爆破压力",
-        "spec": "≥3.0MPa",
-        "method": "爆破测试机",
-        "result": "pass",
-        "measured": "3.8"
-      }
-    ],
-    "changes": [
-      "ECN-2026-003",
-      "ECN-2026-004"
-    ]
+    "spec": "DN125-DN300",
+    "material": "SUS304",
+    "series": "沟槽系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "沟槽式异径对接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 沟槽连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/grooved-reducing-coupling.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
   },
   {
-    "id": "PRD-002",
-    "name": "沟槽式等径三通",
-    "code": "FR-GT-100-304",
-    "category": [
-      "沟槽系统",
-      "三通"
-    ],
-    "spec": "DN100",
-    "material": "SUS304 不锈钢",
-    "series": "沟槽系列",
-    "version": "V2.1",
-    "status": "待评审",
-    "owner": "技术质量部",
-    "updatedAt": "2026-05-25",
-    "description": "DN100 沟槽式等径三通，用于管道分支连接。精密铸造工艺，三端同径 DN100，适用于消防、给排水系统。EPDM 密封圈确保连接可靠。",
-    "image": "images/grooved-tee.png",
-    "drawings": [
-      {
-        "id": "DRW-007",
-        "name": "三通装配图 (DWG)",
-        "file": "GT100-Assembly.dwg",
-        "type": "dwg",
-        "size": "1.5 MB"
-      },
-      {
-        "id": "DRW-008",
-        "name": "三通主体图 (DWG)",
-        "file": "GT100-Tee.dwg",
-        "type": "dwg",
-        "size": "1.0 MB"
-      },
-      {
-        "id": "DRW-009",
-        "name": "三通尺寸图 (PDF)",
-        "file": "GT100-Dimensions.pdf",
-        "type": "pdf",
-        "size": "0.4 MB"
-      },
-      {
-        "id": "DRW-010",
-        "name": "三维模型 (STEP)",
-        "file": "GT100-3D.stp",
-        "type": "stp",
-        "size": "5.2 MB"
-      }
-    ],
-    "bom": [
-      {
-        "level": 0,
-        "part": "GT-100-00",
-        "name": "沟槽三通总成",
-        "qty": 1,
-        "unit": "套",
-        "type": "装配件",
-        "source": "自制"
-      },
-      {
-        "level": 1,
-        "part": "GT-100-01",
-        "name": "三通主体",
-        "qty": 1,
-        "unit": "件",
-        "type": "铸造件",
-        "source": "自制",
-        "material": "SUS304"
-      },
-      {
-        "level": 1,
-        "part": "GT-100-02",
-        "name": "DN100 密封圈",
-        "qty": 3,
-        "unit": "件",
-        "type": "橡胶件",
-        "source": "外购",
-        "material": "EPDM"
-      },
-      {
-        "level": 1,
-        "part": "GT-100-03",
-        "name": "螺栓 M16x65",
-        "qty": 6,
-        "unit": "件",
-        "type": "标准件",
-        "source": "外购",
-        "material": "SUS304"
-      },
-      {
-        "level": 1,
-        "part": "GT-100-04",
-        "name": "螺母 M16",
-        "qty": 6,
-        "unit": "件",
-        "type": "标准件",
-        "source": "外购",
-        "material": "SUS304"
-      }
-    ],
-    "routings": [
-      {
-        "seq": 10,
-        "name": "精密铸造",
-        "dept": "铸造车间",
-        "machine": "中频熔炼炉",
-        "time": "150 min",
-        "keyReq": "CT7 精度"
-      },
-      {
-        "seq": 20,
-        "name": "铸件清理",
-        "dept": "铸造车间",
-        "machine": "抛丸机",
-        "time": "25 min",
-        "keyReq": "去除浇口飞边"
-      },
-      {
-        "seq": 30,
-        "name": "固溶热处理",
-        "dept": "热处理",
-        "machine": "固溶炉",
-        "time": "100 min",
-        "keyReq": "1050°C x 1h"
-      },
-      {
-        "seq": 40,
-        "name": "机加工端面",
-        "dept": "机加工",
-        "machine": "CNC 加工中心",
-        "time": "60 min",
-        "keyReq": "三端面平行度 0.05"
-      },
-      {
-        "seq": 50,
-        "name": "气密测试",
-        "dept": "品质部",
-        "machine": "气密测试台",
-        "time": "25 min",
-        "keyReq": "0.6MPa 保压 3min"
-      },
-      {
-        "seq": 60,
-        "name": "钝化处理",
-        "dept": "表面处理",
-        "machine": "钝化线",
-        "time": "35 min",
-        "keyReq": "表面均匀"
-      },
-      {
-        "seq": 70,
-        "name": "检验包装",
-        "dept": "品质部",
-        "machine": "手动",
-        "time": "20 min",
-        "keyReq": "全检"
-      }
-    ],
-    "sops": [
-      {
-        "code": "SOP-CAST-001",
-        "name": "精密铸造作业指导书",
-        "category": "铸造"
-      },
-      {
-        "code": "SOP-MACH-004",
-        "name": "三通机加工操作标准",
-        "category": "机加工"
-      },
-      {
-        "code": "SOP-TEST-002",
-        "name": "气密测试操作规范",
-        "category": "测试"
-      },
-      {
-        "code": "QC-GT-100",
-        "name": "三通检验规范",
-        "category": "检验"
-      }
-    ],
-    "inspection": [
-      {
-        "name": "主体内径",
-        "spec": "DN100 H9",
-        "method": "内径千分尺",
-        "result": "pass",
-        "measured": "100.015"
-      },
-      {
-        "name": "端面平行度",
-        "spec": "≤0.05mm",
-        "method": "三坐标",
-        "result": "pass",
-        "measured": "0.03"
-      },
-      {
-        "name": "壁厚",
-        "spec": "≥3.0mm",
-        "method": "超声波测厚",
-        "result": "pass",
-        "measured": "3.2"
-      },
-      {
-        "name": "硬度",
-        "spec": "HB≥180",
-        "method": "布氏硬度计",
-        "result": "pass",
-        "measured": "188"
-      },
-      {
-        "name": "气密测试",
-        "spec": "0.6MPa 保压 3min",
-        "method": "气密测试台",
-        "result": "pass",
-        "measured": "无泄漏"
-      }
-    ],
-    "changes": [
-      "ECN-2026-002",
-      "ECN-2026-005"
-    ]
-  },
-  {
-    "id": "PRD-003",
-    "name": "沟槽式90°弯头",
-    "code": "FR-EL-90-304",
+    "id": "FR-002",
+    "code": "FR-002",
+    "name": "沟槽式45°弯头",
     "category": [
       "沟槽系统",
       "弯头"
     ],
-    "spec": "DN40 R=40mm",
-    "material": "SUS304 不锈钢",
-    "series": "沟槽系列",
-    "version": "V1.2",
-    "status": "已发布",
-    "owner": "褚永星",
+    "spec": "DN125-DN300",
+    "material": "SUS304",
+    "series": "沟槽系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
     "updatedAt": "2026-06-01",
-    "description": "DN40 90° 沟槽弯头，用于管道转向连接。采用 304 不锈钢板经下料、成型、焊接、整形工序制成，管壁厚度 1.5mm。广泛应用于消防、给排水管道系统。",
-    "image": "images/grooved-90-elbow.png",
-    "drawings": [
-      {
-        "id": "DRW-011",
-        "name": "弯头三维模型 (STEP)",
-        "file": "EL40-90.stp",
-        "type": "stp",
-        "size": "3.8 MB"
-      },
-      {
-        "id": "DRW-012",
-        "name": "弯头尺寸图 (DWG)",
-        "file": "EL40-90-Dimension.dwg",
-        "type": "dwg",
-        "size": "0.6 MB"
-      },
-      {
-        "id": "DRW-013",
-        "name": "弯头焊接检验图 (PDF)",
-        "file": "EL40-90-Weld.pdf",
-        "type": "pdf",
-        "size": "0.3 MB"
-      },
-      {
-        "id": "DRW-014",
-        "name": "弯头下料图 (DXF)",
-        "file": "EL40-90-Blank.dxf",
-        "type": "dxf",
-        "size": "0.2 MB"
-      },
-      {
-        "id": "DRW-015",
-        "name": "弯头模具图 (DWG)",
-        "file": "EL40-90-Mould.dwg",
-        "type": "dwg",
-        "size": "1.1 MB"
-      }
-    ],
-    "bom": [
-      {
-        "level": 0,
-        "part": "EL-40-00",
-        "name": "90°弯头总成",
-        "qty": 1,
-        "unit": "件",
-        "type": "加工件",
-        "source": "自制"
-      },
-      {
-        "level": 1,
-        "part": "EL-40-01",
-        "name": "弯头管坯 40mm",
-        "qty": 1,
-        "unit": "件",
-        "type": "加工件",
-        "source": "外协",
-        "material": "SUS304"
-      },
-      {
-        "level": 1,
-        "part": "EL-40-02",
-        "name": "密封圈 EPDM",
-        "qty": 2,
-        "unit": "件",
-        "type": "橡胶件",
-        "source": "外购",
-        "material": "EPDM"
-      },
-      {
-        "level": 1,
-        "part": "EL-40-03",
-        "name": "螺栓 M12x50",
-        "qty": 2,
-        "unit": "件",
-        "type": "标准件",
-        "source": "外购",
-        "material": "SUS304"
-      },
-      {
-        "level": 1,
-        "part": "EL-40-04",
-        "name": "螺母 M12",
-        "qty": 2,
-        "unit": "件",
-        "type": "标准件",
-        "source": "外购",
-        "material": "SUS304"
-      }
-    ],
-    "routings": [
-      {
-        "seq": 10,
-        "name": "下料",
-        "dept": "制管",
-        "machine": "激光切割机",
-        "time": "20 min",
-        "keyReq": "长度 ±0.5mm"
-      },
-      {
-        "seq": 20,
-        "name": "成型",
-        "dept": "成型",
-        "machine": "液压弯管机",
-        "time": "30 min",
-        "keyReq": "R=40mm, 椭圆度≤2%"
-      },
-      {
-        "seq": 30,
-        "name": "焊接",
-        "dept": "焊接",
-        "machine": "氩弧焊机",
-        "time": "45 min",
-        "keyReq": "焊缝连续无咬边"
-      },
-      {
-        "seq": 40,
-        "name": "整形",
-        "dept": "成型",
-        "machine": "整形模",
-        "time": "20 min",
-        "keyReq": "角度 90°±0.5°"
-      },
-      {
-        "seq": 50,
-        "name": "酸洗",
-        "dept": "表面处理",
-        "machine": "酸洗线",
-        "time": "40 min",
-        "keyReq": "表面均匀无黄蓝"
-      },
-      {
-        "seq": 60,
-        "name": "检验",
-        "dept": "品质部",
-        "machine": "三坐标测量机",
-        "time": "25 min",
-        "keyReq": "尺寸外观全检"
-      },
-      {
-        "seq": 70,
-        "name": "包装入库",
-        "dept": "仓储",
-        "machine": "手工",
-        "time": "10 min",
-        "keyReq": "防锈处理"
-      }
-    ],
-    "sops": [
-      {
-        "code": "SOP-CUT-001",
-        "name": "激光下料操作标准",
-        "category": "下料"
-      },
-      {
-        "code": "SOP-FORM-002",
-        "name": "弯管成型作业指导",
-        "category": "成型"
-      },
-      {
-        "code": "SOP-WELD-001",
-        "name": "氩弧焊接作业指导书",
-        "category": "焊接"
-      },
-      {
-        "code": "SOP-PICK-003",
-        "name": "弯头酸洗工艺规范",
-        "category": "表面处理"
-      },
-      {
-        "code": "QC-EL-040",
-        "name": "弯头检验规范",
-        "category": "检验"
-      }
-    ],
-    "inspection": [
-      {
-        "name": "弯曲角度",
-        "spec": "90°±0.5°",
-        "method": "角度测量仪",
-        "result": "pass",
-        "measured": "90.2°"
-      },
-      {
-        "name": "壁厚",
-        "spec": "≥1.5mm",
-        "method": "超声波测厚仪",
-        "result": "pass",
-        "measured": "1.52"
-      },
-      {
-        "name": "椭圆度",
-        "spec": "≤2%",
-        "method": "卡尺",
-        "result": "pass",
-        "measured": "1.2%"
-      },
-      {
-        "name": "表面粗糙度",
-        "spec": "Ra≤0.8",
-        "method": "粗糙度仪",
-        "result": "pass",
-        "measured": "0.6"
-      },
-      {
-        "name": "焊缝外观",
-        "spec": "无裂纹/咬边",
-        "method": "目视+PT",
-        "result": "pass",
-        "measured": "合格"
-      },
-      {
-        "name": "硬度",
-        "spec": "HB≥170",
-        "method": "硬度计",
-        "result": "pass",
-        "measured": "182"
-      }
-    ],
-    "changes": [
-      "ECN-2026-001"
-    ]
+    "description": "沟槽式45°弯头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 沟槽连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/grooved-45-elbow.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
   },
   {
-    "id": "PRD-004",
-    "name": "沟槽式法兰",
-    "code": "FR-FL-80-304",
+    "id": "FR-003",
+    "code": "FR-003",
+    "name": "沟槽式90°弯头",
+    "category": [
+      "沟槽系统",
+      "弯头"
+    ],
+    "spec": "DN125-DN300",
+    "material": "SUS304",
+    "series": "沟槽系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "沟槽式90°弯头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 沟槽连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/grooved-90-elbow.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-004",
+    "code": "FR-004",
+    "name": "沟槽式等径三通",
+    "category": [
+      "沟槽系统",
+      "三通"
+    ],
+    "spec": "DN125-DN300",
+    "material": "SUS304",
+    "series": "沟槽系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "沟槽式等径三通，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 沟槽连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/grooved-tee.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-005",
+    "code": "FR-005",
+    "name": "沟槽式异径三通",
+    "category": [
+      "沟槽系统",
+      "三通"
+    ],
+    "spec": "DN125-DN300",
+    "material": "SUS304",
+    "series": "沟槽系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "沟槽式异径三通，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 沟槽连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/grooved-reducing-tee.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-006",
+    "code": "FR-006",
+    "name": "沟槽式等径四通",
+    "category": [
+      "沟槽系统",
+      "管件"
+    ],
+    "spec": "DN125-DN300",
+    "material": "SUS304",
+    "series": "沟槽系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "沟槽式等径四通，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 沟槽连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/grooved-cross.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-007",
+    "code": "FR-007",
+    "name": "沟槽式异径四通",
+    "category": [
+      "沟槽系统",
+      "管件"
+    ],
+    "spec": "DN125-DN300",
+    "material": "SUS304",
+    "series": "沟槽系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "沟槽式异径四通，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 沟槽连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/grooved-reducing-cross.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-008",
+    "code": "FR-008",
+    "name": "沟槽式法兰转换接头",
     "category": [
       "沟槽系统",
       "法兰"
     ],
-    "spec": "DN80 PN16",
-    "material": "SUS304 不锈钢",
-    "series": "沟槽系列",
+    "spec": "DN125-DN300",
+    "material": "SUS304",
+    "series": "沟槽系统",
     "version": "V1.0",
-    "status": "试制",
-    "owner": "技术质量部",
-    "updatedAt": "2026-04-15",
-    "description": "DN80 沟槽式法兰，用于管道与设备（阀门、水泵、消防栓等）之间的连接。一侧为沟槽连接口，另一侧为法兰连接面，PN16 压力等级。",
-    "image": "images/grooved-flange-adapter.png",
-    "drawings": [
-      {
-        "id": "DRW-016",
-        "name": "法兰装配图 (DWG)",
-        "file": "FL80-Assembly.dwg",
-        "type": "dwg",
-        "size": "1.0 MB"
-      },
-      {
-        "id": "DRW-017",
-        "name": "法兰尺寸图 (PDF)",
-        "file": "FL80-Dimension.pdf",
-        "type": "pdf",
-        "size": "0.3 MB"
-      },
-      {
-        "id": "DRW-018",
-        "name": "法兰三维模型 (STEP)",
-        "file": "FL80-3D.stp",
-        "type": "stp",
-        "size": "3.2 MB"
-      }
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "沟槽式法兰转换接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 沟槽连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/grooved-flange-adapter.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-009",
+    "code": "FR-009",
+    "name": "沟槽卡压式异径对接头",
+    "category": [
+      "沟槽系统",
+      "管件"
     ],
-    "bom": [
-      {
-        "level": 0,
-        "part": "FL-80-00",
-        "name": "沟槽法兰总成",
-        "qty": 1,
-        "unit": "套",
-        "type": "装配件",
-        "source": "自制"
-      },
-      {
-        "level": 1,
-        "part": "FL-80-01",
-        "name": "法兰本体",
-        "qty": 1,
-        "unit": "件",
-        "type": "铸造件",
-        "source": "自制",
-        "material": "SUS304"
-      },
-      {
-        "level": 1,
-        "part": "FL-80-02",
-        "name": "密封圈 EPDM",
-        "qty": 1,
-        "unit": "件",
-        "type": "橡胶件",
-        "source": "外购",
-        "material": "EPDM"
-      },
-      {
-        "level": 1,
-        "part": "FL-80-03",
-        "name": "螺栓 M16x70",
-        "qty": 4,
-        "unit": "件",
-        "type": "标准件",
-        "source": "外购"
-      },
-      {
-        "level": 1,
-        "part": "FL-80-04",
-        "name": "螺母 M16",
-        "qty": 4,
-        "unit": "件",
-        "type": "标准件",
-        "source": "外购"
-      }
+    "spec": "DN125-DN300",
+    "material": "SUS304",
+    "series": "沟槽系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "沟槽卡压式异径对接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 沟槽连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/grooved-press-reducing-coupling.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-010",
+    "code": "FR-010",
+    "name": "沟槽卡压式异径三通",
+    "category": [
+      "沟槽系统",
+      "三通"
     ],
-    "routings": [
-      {
-        "seq": 10,
-        "name": "精密铸造",
-        "dept": "铸造车间",
-        "machine": "中频熔炼炉",
-        "time": "130 min",
-        "keyReq": "CT7"
-      },
-      {
-        "seq": 20,
-        "name": "清理",
-        "dept": "铸造车间",
-        "machine": "抛丸机",
-        "time": "20 min",
-        "keyReq": "表面光洁"
-      },
-      {
-        "seq": 30,
-        "name": "热处理",
-        "dept": "热处理",
-        "machine": "固溶炉",
-        "time": "90 min",
-        "keyReq": "1050°C"
-      },
-      {
-        "seq": 40,
-        "name": "机加工",
-        "dept": "机加工",
-        "machine": "CNC 车铣复合",
-        "time": "55 min",
-        "keyReq": "法兰面平整度"
-      },
-      {
-        "seq": 50,
-        "name": "钻孔",
-        "dept": "机加工",
-        "machine": "数控钻床",
-        "time": "20 min",
-        "keyReq": "螺栓孔均布"
-      },
-      {
-        "seq": 60,
-        "name": "检验",
-        "dept": "品质部",
-        "machine": "三坐标",
-        "time": "30 min",
-        "keyReq": "全尺寸检测"
-      },
-      {
-        "seq": 70,
-        "name": "包装入库",
-        "dept": "仓储",
-        "machine": "手工",
-        "time": "10 min",
-        "keyReq": "防锈"
-      }
+    "spec": "DN125-DN300",
+    "material": "SUS304",
+    "series": "沟槽系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "沟槽卡压式异径三通，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 沟槽连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/grooved-press-reducing-tee.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-011",
+    "code": "FR-011",
+    "name": "沟槽卡压式异径四通",
+    "category": [
+      "沟槽系统",
+      "管件"
     ],
-    "sops": [
-      {
-        "code": "SOP-CAST-001",
-        "name": "精密铸造作业指导书",
-        "category": "铸造"
-      },
-      {
-        "code": "SOP-MACH-005",
-        "name": "法兰机加工操作标准",
-        "category": "机加工"
-      },
-      {
-        "code": "QC-FL-080",
-        "name": "法兰检验规范",
-        "category": "检验"
-      }
+    "spec": "DN125-DN300",
+    "material": "SUS304",
+    "series": "沟槽系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "沟槽卡压式异径四通，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 沟槽连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/grooved-press-reducing-cross.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-012",
+    "code": "FR-012",
+    "name": "沟槽式卡箍接头",
+    "category": [
+      "沟槽系统",
+      "卡箍"
     ],
-    "inspection": [
-      {
-        "name": "法兰外径",
-        "spec": "DN80 PN16",
-        "method": "卡尺",
-        "result": "pass",
-        "measured": "200.0"
-      },
-      {
-        "name": "密封面平整度",
-        "spec": "≤0.05mm",
-        "method": "百分表",
-        "result": "pass",
-        "measured": "0.03"
-      },
-      {
-        "name": "螺栓孔中心距",
-        "spec": "±0.3mm",
-        "method": "卡尺",
-        "result": "pass",
-        "measured": "0.2"
-      },
-      {
-        "name": "硬度",
-        "spec": "HB≥180",
-        "method": "硬度计",
-        "result": "pass",
-        "measured": "190"
-      },
-      {
-        "name": "密封测试",
-        "spec": "1.0MPa 保压",
-        "method": "测试台",
-        "result": "pending",
-        "measured": "待检"
-      }
+    "spec": "DN125-DN300",
+    "material": "SUS304",
+    "series": "沟槽系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "沟槽式卡箍接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 沟槽连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/grooved-clamp-coupling.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-013",
+    "code": "FR-013",
+    "name": "双卡压式等径对接头",
+    "category": [
+      "双卡压系统"
     ],
-    "changes": [
-      "ECN-2026-006"
-    ]
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "双卡压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "双卡压式等径对接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 双卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/double-press-coupling.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-014",
+    "code": "FR-014",
+    "name": "双卡压式异径对接头",
+    "category": [
+      "双卡压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "双卡压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "双卡压式异径对接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 双卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/double-press-reducing-coupling.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-015",
+    "code": "FR-015",
+    "name": "双卡压式内螺纹转换接头",
+    "category": [
+      "双卡压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "双卡压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "双卡压式内螺纹转换接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 双卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/double-press-female-adapter.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-016",
+    "code": "FR-016",
+    "name": "双卡压式外螺纹转换接头",
+    "category": [
+      "双卡压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "双卡压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "双卡压式外螺纹转换接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 双卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/double-press-male-adapter.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-017",
+    "code": "FR-017",
+    "name": "双卡压式螺母移动转换接头",
+    "category": [
+      "双卡压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "双卡压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "双卡压式螺母移动转换接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 双卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/double-press-swivel-female-adapter.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-018",
+    "code": "FR-018",
+    "name": "双卡压式内螺纹90°转换弯头（短型）",
+    "category": [
+      "双卡压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "双卡压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "双卡压式内螺纹90°转换弯头（短型），源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 双卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/double-press-female-90-elbow-short.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-019",
+    "code": "FR-019",
+    "name": "双卡压式A型90°弯头",
+    "category": [
+      "双卡压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "双卡压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "双卡压式A型90°弯头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 双卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/double-press-a-90-elbow.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-020",
+    "code": "FR-020",
+    "name": "双卡压式异径90°弯头",
+    "category": [
+      "双卡压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "双卡压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "双卡压式异径90°弯头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 双卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/double-press-reducing-90-elbow.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-021",
+    "code": "FR-021",
+    "name": "双卡压式外螺纹90°转换弯头",
+    "category": [
+      "双卡压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "双卡压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "双卡压式外螺纹90°转换弯头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 双卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/double-press-male-90-elbow.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-022",
+    "code": "FR-022",
+    "name": "双卡压式内螺纹90°转换弯头（长型）",
+    "category": [
+      "双卡压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "双卡压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "双卡压式内螺纹90°转换弯头（长型），源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 双卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/double-press-female-90-elbow-long.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-023",
+    "code": "FR-023",
+    "name": "双卡压式90°移动螺母转换接头",
+    "category": [
+      "双卡压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "双卡压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "双卡压式90°移动螺母转换接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 双卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/double-press-swivel-90-elbow.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-024",
+    "code": "FR-024",
+    "name": "双卡压式B型90°弯头",
+    "category": [
+      "双卡压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "双卡压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "双卡压式B型90°弯头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 双卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/double-press-b-90-elbow.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-025",
+    "code": "FR-025",
+    "name": "双卡压式A型45°弯头",
+    "category": [
+      "双卡压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "双卡压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "双卡压式A型45°弯头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 双卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/double-press-a-45-elbow.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-026",
+    "code": "FR-026",
+    "name": "双卡压式B型45°弯头",
+    "category": [
+      "双卡压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "双卡压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "双卡压式B型45°弯头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 双卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/double-press-b-45-elbow.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-027",
+    "code": "FR-027",
+    "name": "双卡压式异径45°弯头",
+    "category": [
+      "双卡压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "双卡压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "双卡压式异径45°弯头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 双卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/double-press-reducing-45-elbow.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-028",
+    "code": "FR-028",
+    "name": "双卡压式等径三通接头",
+    "category": [
+      "双卡压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "双卡压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "双卡压式等径三通接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 双卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/double-press-tee.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-029",
+    "code": "FR-029",
+    "name": "双卡压式异径三通接头",
+    "category": [
+      "双卡压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "双卡压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "双卡压式异径三通接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 双卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/double-press-reducing-tee.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-030",
+    "code": "FR-030",
+    "name": "双卡压式外螺纹三通转换接头",
+    "category": [
+      "双卡压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "双卡压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "双卡压式外螺纹三通转换接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 双卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/double-press-male-tee.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-031",
+    "code": "FR-031",
+    "name": "双卡压式内螺纹三通转换接头",
+    "category": [
+      "双卡压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "双卡压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "双卡压式内螺纹三通转换接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 双卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/double-press-female-tee.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-032",
+    "code": "FR-032",
+    "name": "双卡压式等径四通接头",
+    "category": [
+      "双卡压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "双卡压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "双卡压式等径四通接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 双卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/double-press-cross.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-033",
+    "code": "FR-033",
+    "name": "双卡压式异径四通接头",
+    "category": [
+      "双卡压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "双卡压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "双卡压式异径四通接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 双卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/double-press-reducing-cross.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-034",
+    "code": "FR-034",
+    "name": "双卡压式承口式法兰转换接头",
+    "category": [
+      "双卡压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "双卡压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "双卡压式承口式法兰转换接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 双卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/double-press-flange-adapter.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-035",
+    "code": "FR-035",
+    "name": "双卡压式可调对接头",
+    "category": [
+      "双卡压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "双卡压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "双卡压式可调对接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 双卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/double-press-adjustable-coupling.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-036",
+    "code": "FR-036",
+    "name": "双卡压式管帽",
+    "category": [
+      "双卡压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "双卡压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "双卡压式管帽，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 双卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/double-press-cap.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-037",
+    "code": "FR-037",
+    "name": "双卡压式凸面板式平焊法兰",
+    "category": [
+      "双卡压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "双卡压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "双卡压式凸面板式平焊法兰，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 双卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/double-press-flat-welding-flange.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-038",
+    "code": "FR-038",
+    "name": "双卡压式直管式法兰转换接头",
+    "category": [
+      "双卡压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "双卡压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "双卡压式直管式法兰转换接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 双卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/double-press-straight-flange-adapter.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-039",
+    "code": "FR-039",
+    "name": "双卡压式管桥",
+    "category": [
+      "双卡压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "双卡压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "双卡压式管桥，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 双卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/double-press-pipe-bridge.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-040",
+    "code": "FR-040",
+    "name": "双卡压式双外螺纹接头",
+    "category": [
+      "双卡压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "双卡压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "双卡压式双外螺纹接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 双卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/double-press-double-male-nipple.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-041",
+    "code": "FR-041",
+    "name": "单卡压式等径对接头",
+    "category": [
+      "环压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "环压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "单卡压式等径对接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 单卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/single-press-coupling.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-042",
+    "code": "FR-042",
+    "name": "单卡压式异径对接头",
+    "category": [
+      "环压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "环压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "单卡压式异径对接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 单卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/single-press-reducing-coupling.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-043",
+    "code": "FR-043",
+    "name": "单卡压式内螺纹转换接头",
+    "category": [
+      "环压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "环压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "单卡压式内螺纹转换接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 单卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/single-press-female-adapter.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-044",
+    "code": "FR-044",
+    "name": "单卡压式外螺纹转换接头",
+    "category": [
+      "环压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "环压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "单卡压式外螺纹转换接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 单卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/single-press-male-adapter.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-045",
+    "code": "FR-045",
+    "name": "单卡压式螺母移动转换接头",
+    "category": [
+      "环压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "环压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "单卡压式螺母移动转换接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 单卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/single-press-swivel-female-adapter.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-046",
+    "code": "FR-046",
+    "name": "单卡压式内螺纹90°转换弯头（短型）",
+    "category": [
+      "环压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "环压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "单卡压式内螺纹90°转换弯头（短型），源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 单卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/single-press-female-90-elbow-short.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-047",
+    "code": "FR-047",
+    "name": "单卡压式A型90°弯头",
+    "category": [
+      "环压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "环压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "单卡压式A型90°弯头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 单卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/single-press-a-90-elbow.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-048",
+    "code": "FR-048",
+    "name": "单卡压式异径90°弯头",
+    "category": [
+      "环压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "环压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "单卡压式异径90°弯头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 单卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/single-press-reducing-90-elbow.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-049",
+    "code": "FR-049",
+    "name": "单卡压式外螺纹90°转换弯头",
+    "category": [
+      "环压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "环压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "单卡压式外螺纹90°转换弯头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 单卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/single-press-male-90-elbow.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-050",
+    "code": "FR-050",
+    "name": "单卡压式内螺纹90°转换弯头（长型）",
+    "category": [
+      "环压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "环压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "单卡压式内螺纹90°转换弯头（长型），源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 单卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/single-press-female-90-elbow-long.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-051",
+    "code": "FR-051",
+    "name": "单卡压式90°移动螺母转换接头",
+    "category": [
+      "环压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "环压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "单卡压式90°移动螺母转换接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 单卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/single-press-swivel-90-elbow.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-052",
+    "code": "FR-052",
+    "name": "单卡压式B型90°弯头",
+    "category": [
+      "环压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "环压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "单卡压式B型90°弯头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 单卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/single-press-b-90-elbow.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-053",
+    "code": "FR-053",
+    "name": "单卡压式A型45°弯头",
+    "category": [
+      "环压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "环压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "单卡压式A型45°弯头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 单卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/single-press-a-45-elbow.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-054",
+    "code": "FR-054",
+    "name": "单卡压式B型45°弯头",
+    "category": [
+      "环压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "环压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "单卡压式B型45°弯头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 单卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/single-press-b-45-elbow.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-055",
+    "code": "FR-055",
+    "name": "单卡压式异径45°弯头",
+    "category": [
+      "环压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "环压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "单卡压式异径45°弯头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 单卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/single-press-reducing-45-elbow.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-056",
+    "code": "FR-056",
+    "name": "单卡压式等径三通接头",
+    "category": [
+      "环压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "环压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "单卡压式等径三通接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 单卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/single-press-tee.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-057",
+    "code": "FR-057",
+    "name": "单卡压式异径三通接头",
+    "category": [
+      "环压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "环压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "单卡压式异径三通接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 单卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/single-press-reducing-tee.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-058",
+    "code": "FR-058",
+    "name": "单卡压式外螺纹三通转换接头",
+    "category": [
+      "环压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "环压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "单卡压式外螺纹三通转换接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 单卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/single-press-male-tee.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-059",
+    "code": "FR-059",
+    "name": "单卡压式内螺纹三通转换接头",
+    "category": [
+      "环压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "环压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "单卡压式内螺纹三通转换接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 单卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/single-press-female-tee.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-060",
+    "code": "FR-060",
+    "name": "单卡压式等径四通接头",
+    "category": [
+      "环压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "环压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "单卡压式等径四通接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 单卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/single-press-cross.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-061",
+    "code": "FR-061",
+    "name": "单卡压式异径四通接头",
+    "category": [
+      "环压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "环压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "单卡压式异径四通接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 单卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/single-press-reducing-cross.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-062",
+    "code": "FR-062",
+    "name": "单卡压式承口式法兰转换接头",
+    "category": [
+      "环压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "环压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "单卡压式承口式法兰转换接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 单卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/single-press-flange-adapter.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-063",
+    "code": "FR-063",
+    "name": "单卡压式可调对接头",
+    "category": [
+      "环压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "环压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "单卡压式可调对接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 单卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/single-press-adjustable-coupling.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-064",
+    "code": "FR-064",
+    "name": "单卡压式管帽",
+    "category": [
+      "环压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "环压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "单卡压式管帽，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 单卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/single-press-cap.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-065",
+    "code": "FR-065",
+    "name": "单卡压式凸面板式平焊法兰",
+    "category": [
+      "环压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "环压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "单卡压式凸面板式平焊法兰，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 单卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/single-press-flat-welding-flange.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-066",
+    "code": "FR-066",
+    "name": "单卡压式直管式法兰转换接头",
+    "category": [
+      "环压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "环压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "单卡压式直管式法兰转换接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 单卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/single-press-straight-flange-adapter.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-067",
+    "code": "FR-067",
+    "name": "单卡压式管桥",
+    "category": [
+      "环压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "环压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "单卡压式管桥，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 单卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/single-press-pipe-bridge.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-068",
+    "code": "FR-068",
+    "name": "单卡压式双外螺纹接头",
+    "category": [
+      "环压系统"
+    ],
+    "spec": "DN15-DN100",
+    "material": "SUS304/316L",
+    "series": "环压系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "单卡压式双外螺纹接头，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16 | 连接方式: 单卡压连接",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/single-press-double-male-nipple.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-069",
+    "code": "FR-069",
+    "name": "不锈钢水管",
+    "category": [
+      "不锈钢管系统"
+    ],
+    "spec": "DN15-DN300",
+    "material": "SUS304/316L",
+    "series": "不锈钢管系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "不锈钢水管，适用于工业与水务管路系统选型。",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/stainless-water-pipe.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-070",
+    "code": "FR-070",
+    "name": "不锈钢保温管",
+    "category": [
+      "保温管系统"
+    ],
+    "spec": "DN15-DN300",
+    "material": "SUS304/316L",
+    "series": "保温管系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "不锈钢保温管，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16-PN25 | 连接方式: 管材",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/stainless-insulated-pipe.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
+  },
+  {
+    "id": "FR-071",
+    "code": "FR-071",
+    "name": "不锈钢覆塑管",
+    "category": [
+      "覆塑管系统"
+    ],
+    "spec": "DN15-DN300",
+    "material": "SUS304/316L",
+    "series": "覆塑管系统",
+    "version": "V1.0",
+    "status": "待发布",
+    "owner": "",
+    "updatedAt": "2026-06-01",
+    "description": "不锈钢覆塑管，源自产品样本识别，适用于工业与水务管路系统选型。 | 压力等级: PN16-PN25 | 连接方式: 管材",
+    "image": "https://sggg.cc.cd/files/products/images/catalog/stainless-coated-pipe.png",
+    "drawings": [],
+    "bom": [],
+    "routings": [],
+    "sops": [],
+    "inspection": [],
+    "changes": []
   }
 ]

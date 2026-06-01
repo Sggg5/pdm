@@ -153,3 +153,13 @@ tr:hover td{background:#E0F2F1}
 .sidebar::-webkit-scrollbar-thumb{background:var(--line);border-radius:2px}
 /* Responsive modal */
 @media(max-width:640px){.modal{padding:20px 16px}.ecn-meta-grid{grid-template-columns:1fr}}
+
+
+/* 待发布 */
+.dot-blue{background:#3B82F6}
+/* Empty section placeholder */
+.empty-section{padding:24px;text-align:center;color:var(--muted);font-size:13px;background:var(--paper);border:1px dashed var(--line);border-radius:var(--radius-sm);margin-bottom:16px}
+.empty-section svg{width:24px;height:24px;margin-bottom:6px;opacity:0.4}
+/* Module card */
+.module-card{cursor:default}
+.module-card[data-active]{cursor:pointer}
